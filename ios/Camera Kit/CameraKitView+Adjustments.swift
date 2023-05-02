@@ -1,0 +1,30 @@
+//
+//  CameraKitView+Adjustments.swift
+//  DemoApp
+//
+//  Created by Rıdvan Altun on 7.04.2023.
+//
+
+extension CameraKitView {
+  func checkToneModeSupporting(callback jsCallbackFunc: @escaping RCTResponseSenderBlock) {
+    let err: NSNull = NSNull()
+    let status = self.cameraController?.checkToneModeSupporting()
+    
+    jsCallbackFunc([status, err])
+  }
+  
+  func checkBlurSupporting(callback jsCallbackFunc: @escaping RCTResponseSenderBlock) {
+    let err: NSNull = NSNull()
+    let status = self.cameraController?.checkBlurSupporting()
+    
+    jsCallbackFunc([status, err])
+  }
+  
+  func adjustBlur(amount: Double) {
+    self.cameraController?.adjustBlur(amount: amount)
+  }
+  
+  func adjustTone(amount: Double) {
+    self.cameraController?.adjustTone(amount: amount)
+  }
+}

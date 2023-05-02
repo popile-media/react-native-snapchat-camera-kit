@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">SnapchatCameraKitExample</string>
+    <string name="camera_kit_application_id">SNAPCHAT-CAMERA-KIT-APPLICATION-ID</string>
+    <string name="camera_kit_api_token">SNAPCHAT-CAMERA-KIT-API-KEY</string>
+</resources>
