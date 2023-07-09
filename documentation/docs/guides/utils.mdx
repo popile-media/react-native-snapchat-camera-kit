@@ -1,0 +1,68 @@
+---
+title: Utils
+sidebar_label: Utils
+---
+
+The functions here are not the main feature of the library; they are additional functions that you can use.
+
+## Getting Video Metadata
+
+Here is the example code below that demonstrates how to extract the metadata of any video file:
+
+```jsx
+import { getMetadata } from 'react-native-snapchat-camera-kit';
+
+const metadata = await getMetadata('video-path');
+```
+
+When you record a video using the library, this data is already provided.
+
+### Metadata
+
+```ts
+interface VideoMetadata {
+  /**
+   * The path of the file.
+   */
+  path: string;
+
+  /**
+   * File size in bytes.
+   */
+  size: number;
+
+  /**
+   * The average framerate (in frames/sec).
+   */
+  frameRate: number;
+
+  /**
+   * Duration of the video in seconds.
+   */
+  duration: number;
+
+  /**
+   * Audio codec.
+   *
+   * @platform Android
+   */
+  audioCodec: string;
+
+  /**
+   * Video codec.
+   *
+   * @platform Android
+   */
+  videoCodec: string;
+
+  /**
+   * Video width.
+   */
+  width: number;
+
+  /**
+   * Video height.
+   */
+  height: number;
+}
+```

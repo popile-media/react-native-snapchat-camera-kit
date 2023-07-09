@@ -29,8 +29,8 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            yarn install --cwd example --frozen-lockfile
-            yarn install --frozen-lockfile
+            yarn install --cwd example --frozen-lockfile --ignore-engines
+            yarn install --frozen-lockfile --ignore-engines
       - save_cache:
           key: dependencies-{{ checksum "package.json" }}
           paths:
@@ -52,6 +52,7 @@ jobs:
           name: Lint files
           command: |
             yarn lint
+
   typescript:
     executor: default
     steps:
@@ -60,6 +61,7 @@ jobs:
           name: Typecheck files
           command: |
             yarn typecheck
+
   unit-tests:
     executor: default
     steps:
@@ -72,6 +74,15 @@ jobs:
           path: coverage
           destination: coverage
 
+  build-documents:
+    executor: default
+    steps:
+      - attach_project
+      - run:
+          name: Build documentation
+          command: |
+            yarn docs:build
+
   build-package:
     executor: default
     steps:
@@ -80,6 +91,7 @@ jobs:
           name: Build package
           command: |
             yarn prepack
+
   deploy:
     executor: default
     steps:
@@ -118,12 +130,16 @@ workflows:
       - build-package:
           requires:
             - install-dependencies
+      - build-documents:
+          requires:
+            - install-dependencies
       - deploy:
           requires:
             - install-dependencies
             - lint
             - typescript
             - unit-tests
+            - build-documents
             - build-package
           filters:
             branches:

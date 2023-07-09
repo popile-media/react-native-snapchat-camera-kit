@@ -142,7 +142,7 @@ const CameraScreen = ({ navigation, route }: CameraScreenProps) => {
         }}
       />
       <ActionButtons
-        style={styles.ActionButtons}
+        style={styles.actionButtons}
         buttons={[
           {
             label: 'Switch Video Mode',
@@ -360,7 +360,7 @@ const styles = StyleSheet.create({
     bottom: 60,
     height: 50,
   },
-  ActionButtons: {
+  actionButtons: {
     position: 'absolute',
     alignItems: 'flex-start',
     left: 20,

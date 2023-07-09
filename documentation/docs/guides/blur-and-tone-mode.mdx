@@ -1,0 +1,38 @@
+---
+title: Blur & Tone Mode
+sidebar_label: Blur & Tone Mode
+---
+
+:::danger Take care
+
+This features are experimental.
+
+:::
+
+### Check Features Are Supported
+
+```javascript
+// Is phone supporting the tone mode feature?
+ref.current?.checkToneModeSupporting().then((status) => {
+    // ..
+});
+
+// Is phone supporting the background blur feature?
+ref.current?.checkBlurSupporting().then((status) => {
+    // ..
+});
+```
+
+### Setting Blur and Tone Mode Amount
+
+Value must be between `0` and `1`, for an example `0.5`.
+
+```javascript
+const amount = 1;
+
+// adjust tone
+ref.current?.adjustTone(amount);
+
+// adjust background blur
+ref.current?.adjustBlur(amount);
+```

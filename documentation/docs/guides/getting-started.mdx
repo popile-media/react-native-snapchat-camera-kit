@@ -1,0 +1,130 @@
+---
+title: Getting Started
+sidebar_label: Getting Started
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+:::note Note
+
+This library under development, if you found a bug, please open an issue from [here](https://github.com/popile-media/react-native-snapchat-camera-kit/issues/new).
+
+:::
+
+:::note Note
+
+`react-native-snapchat-camera-kit` is a 3rd party library, we are working on this in our free time. Fixing bugs and development of awaiting features may take time.
+
+:::
+
+:::note Note
+
+It only works on physical devices, not will work with simulator.
+
+:::
+
+## Installing the library
+
+Install [**react-native-snapchat-camera-kit**](https://www.npmjs.com/package/react-native-snapchat-camera-kit) through npm or yarn:
+
+<Tabs
+  groupId="environment"
+  defaultValue="npm"
+  values={[
+    {label: 'npm', value: 'npm'},
+    {label: 'yarn', value: 'yarn'}
+  ]}>
+<TabItem value="npm">
+
+```bash
+npm i react-native-snapchat-camera-kit
+npx pod-install
+```
+
+</TabItem>
+
+<TabItem value="yarn">
+
+```bash
+yarn add react-native-snapchat-camera-kit
+npx pod-install
+```
+
+</TabItem>
+</Tabs>
+
+## Defining Credentials
+
+There are two ways to set credentials: during build time or at runtime.
+
+### Build Time
+
+You can put your credentials into your native files.
+
+#### Android
+
+Add secrets to `AndroidManifest.xml` file like below:
+
+```xml
+<meta-data
+    android:name="com.snap.camerakit.app.id"
+    android:value="SNAPCHAT-CAMERA-KIT-APPLICATION-ID" />
+<meta-data
+    android:name="com.snap.camerakit.api.token"
+    android:value="SNAPCHAT-CAMERA-KIT-API-KEY" />
+```
+
+#### iOS
+
+Add secrets to `Info.plist` file like below:
+
+```xml
+<key>SCCameraKitClientID</key>
+<string>SNAPCHAT-CAMERA-KIT-APPLICATION-ID</string>
+<key>SCCameraKitAPIToken</key>
+<string>SNAPCHAT-CAMERA-KIT-API-KEY</string>
+```
+
+### Runtime
+
+It is not necessary to define secrets in native code; it can be defined at runtime.
+
+```javascript
+import { init } from 'react-native-snapchat-camera-kit';
+
+init({
+  apiKey: 'SNAPCHAT-CAMERA-KIT-API-KEY',
+  applicationId: 'SNAPCHAT-CAMERA-KIT-APPLICATION-ID',
+});
+```
+
+## Other Required Steps
+
+### Android
+
+1. Open your project's `AndroidManifest.xml` and add the following lines:
+
+```xml
+<uses-permission android:name="android.permission.CAMERA" />
+
+<!-- optionally, if you want to record audio: -->
+<uses-permission android:name="android.permission.RECORD_AUDIO" />
+```
+
+### iOS
+
+1. Open your project's `Info.plist` and add the following lines:
+
+```xml
+<key>NSCameraUsageDescription</key>
+<string>$(PRODUCT_NAME) needs access to your Camera.</string>
+
+<!-- optionally, if you want to record audio: -->
+<key>NSMicrophoneUsageDescription</key>
+<string>$(PRODUCT_NAME) needs access to your Microphone.</string>
+```
+
+## Prepare Lenses
+
+You have to define you lens group id/s before use lenses. Checkout [Defining Lens Group Id](https://popile-media.github.io/react-native-snapchat-camera-kit/docs/guides/manage-lenses#defining-lens-group-id) section.

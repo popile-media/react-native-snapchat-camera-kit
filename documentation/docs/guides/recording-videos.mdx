@@ -1,0 +1,86 @@
+---
+title: Recording Video
+sidebar_label: Recording Video
+---
+
+To capture a video using the Snapchat Camera Kit, you can take reference to below code:
+
+```js
+import React, { useRef } from 'react';
+import { StyleSheet } from 'react-native';
+
+import CameraKit from 'react-native-snapchat-camera-kit';
+
+const App = () => {
+  const ref = useRef<CameraKit>(null);
+
+  const startVideoRecording = () => {
+    ref.current?.startRecording({
+      resolution: '720p',
+    })
+    .then(() => {
+      // video recording started with no problem
+    })
+    .catch((error) => {
+      // something went wrong
+    });
+  };
+
+  const stopVideoRecording = () => {
+    ref.current?.stopRecording().finally(() => {
+      // video recording stopped
+    });
+  };
+
+  return (
+    <React.Fragment>
+      <CameraKit
+        ref={ref}
+        style={styles.camera}
+        onVideoRecordingFinished={(video) => {
+          // you can handle the video here
+        }}
+      />
+      <Button title="Start Video Recording" onPress={startVideoRecording} />
+      <Button title="Stop Video Recording" onPress={stopVideoRecording} />
+    </React.Fragment>
+  );
+};
+
+const styles = StyleSheet.create({
+  camera: {
+    flex: 1,
+  },
+});
+
+export default App;
+```
+
+### Recording Parameters
+
+#### Android
+
+```js
+interface RecordVideoOptionsAndroid {
+  /**
+   * Specify the frames per second this camera should use.
+   *
+   * @default 30
+   */
+  fps?: number;
+
+  /**
+   * Specify the video height and width.
+   *
+   * @default 720p
+   */
+  resolution?: '480p' | '720p' | '1080p' | '2160p';
+}
+```
+#### iOS
+
+We are not there yet. Video resolution fixed to `720p` and the FPS fixed to `30`.
+
+### Video
+
+You can find the [video metadata](https://popile-media.github.io/react-native-snapchat-camera-kit/docs/guides/utils#metadata) on the utils page.

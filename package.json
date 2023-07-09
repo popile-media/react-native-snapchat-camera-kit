@@ -35,7 +35,9 @@
     "example": "yarn --cwd example",
     "bootstrap": "yarn example && yarn install && yarn example pod-install",
     "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build",
-    "commit": "git-cz"
+    "commit": "git-cz",
+    "docs:build": "cd documentation && yarn build",
+    "docs:serve": "cd documentation && yarn serve"
   },
   "keywords": [
     "react-native",
@@ -86,9 +88,6 @@
   "peerDependencies": {
     "react": "*",
     "react-native": "*"
-  },
-  "engines": {
-    "node": ">= 16.0.0"
   },
   "packageManager": "^yarn@1.22.15",
   "jest": {

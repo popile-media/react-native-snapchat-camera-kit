@@ -1,0 +1,43 @@
+---
+title: Camera Controlling
+sidebar_label: Camera Controlling
+---
+
+### Flip Camera
+
+Facing value could be `front` and `back`.
+
+```js
+ref.current?.flipCamera().then((facing) => {
+  // ..
+});
+```
+
+### Zoom
+
+Activating zoom feature:
+
+```jsx
+ <CameraKit
+  // ..
+  zoom
+ />
+```
+
+Value must be between `0` and `1`, for an example `0.5`.
+
+```js
+// adjust zoom
+ref.current?.zoom(amount);
+```
+
+### Tap To Focus
+
+Activating tap to focus feature:
+
+```jsx
+ <CameraKit
+  // ..
+  focus
+ />
+```

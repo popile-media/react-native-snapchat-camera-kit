@@ -1,0 +1,57 @@
+---
+title: Taking Photos
+sidebar_label: Taking Photos
+---
+
+To capture a photo using the Snapchat Camera Kit, you can take reference to below code:
+
+```tsx
+import React, { useRef } from 'react';
+import { StyleSheet } from 'react-native';
+
+import CameraKit from 'react-native-snapchat-camera-kit';
+
+const App = () => {
+  const ref = useRef<CameraKit>(null);
+
+  const capturePhoto = () => {
+    ref.current.takePhoto();
+  };
+
+  return (
+    <React.Fragment>
+      <CameraKit
+        ref={ref}
+        style={styles.camera}
+        onPhotoTaken={(picture) => {
+          // you can handle the picture here
+        }}
+      />
+      <Button title="Capture Photo" onPress={capturePhoto} />
+    </React.Fragment>
+  );
+};
+
+const styles = StyleSheet.create({
+  camera: {
+    flex: 1,
+  },
+});
+
+export default App;
+```
+
+### Photo
+
+```ts
+interface Photo {
+  /**
+   * The path of the file.
+   *
+   * * **Note:** If you want to consume this file (e.g. for displaying it in an `<Image>` component), you might have to add the `file://` prefix.
+   *
+   * * **Note:** This file might get deleted once the app closes because it lives in the temp directory.
+   */
+  path: string;
+}
+```

@@ -1,0 +1,86 @@
+---
+title: Manage Lenses
+sidebar_label: Manage Lenses
+---
+
+### Defining Lens Group Id
+
+You have to define lens group via `lensGroups` prop, you can define multiple or single lens groups like below:
+
+```js
+<CameraKit
+    // ..
+    lensGroups={['your-lens-group-id']}
+/>
+```
+
+### Retrieve Lenses
+
+```js
+ref.current?.getLenses().then((lenses) => {
+  // ..
+});
+```
+
+#### Lens
+
+
+```ts
+type Image = {
+  uri: string;
+  type: 'Webp' | 'Png';
+};
+
+interface Lens {
+  id: string;
+  groupId: string;
+  name: string;
+  facingPreference: 'front' | 'back' | 'unspecified';
+  icons: Image[];
+  previews: Image[];
+  vendorData: {
+    [key: string]: string;
+  };
+}
+```
+
+### Initial Lens Id
+
+You can set initial lens via `initialLens` prop:
+
+```js
+<CameraKit
+    // ..
+    initialLens="initial-lens-id"
+/>
+```
+
+### Managing Lens Volume
+
+Mute/Unmute lens volume:
+
+```js
+const mute = true;
+
+ref.current?.adjustLensesVolume(mute).then((status) => {
+  // ..
+});
+```
+
+### Change Lens by Id
+
+You can apply a lens at once, multiple lens not supported:
+
+```js
+ref.current?.changeLensById('lens-id').then((status) => {
+  // ..
+});
+```
+
+### Clear Lenses
+
+```js
+ref.current?.clearLenses().then((status) => {
+  // ..
+});
+```

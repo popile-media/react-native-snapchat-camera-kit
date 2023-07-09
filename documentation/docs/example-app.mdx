@@ -1,0 +1,52 @@
+---
+id: example-app
+title: Example App
+sidebar_label: Example App
+---
+
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+:::note Note
+
+If you dealing any issue with the library we suggest you try the example app.
+
+:::
+
+:::note Note
+
+App only works on physical devices, not will work with simulator.
+
+:::
+
+## Showcase
+
+|                                  Permissions Screen                                  |                                 Lenses Screen                                  |                                  Camera Screen                                  |
+| :---------------------------------------------------------------------------------: | :----------------------------------------------------------------------------: | :-----------------------------------------------------------------------------: |
+| <img src={useBaseUrl('img/example-app-permissions.png')} width="500" height="500"/> | <img src={useBaseUrl('img/example-app-lenses.png')} width="500" height="500"/> | <img src={useBaseUrl('img/example-app-camera.png')} width="500" height="500" /> |
+
+## Building the App
+
+```bash
+# clone the project
+git clone https://github.com/popile-media/react-native-snapchat-camera-kit.git
+
+# go into the project
+cd react-native-snapchat-camera-kit
+
+# make project ready
+npm run bootstrap
+
+# go into the example
+cd example
+
+# copy environment file and set your credentials
+cp .env.example .env
+
+# run for android
+npm run android
+
+# or
+
+# run for ios
+npm run ios
+```

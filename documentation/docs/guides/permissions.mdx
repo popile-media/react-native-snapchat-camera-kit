@@ -1,0 +1,46 @@
+---
+title: Permissions
+sidebar_label: Permissions
+---
+
+You need to ask necessary permissions before render the CameraKit component.
+
+## Getting Permissions
+
+Simply use the get functions to find out if a user has granted or denied permission before:
+
+```jsx
+import { CameraPermissionManager } from 'react-native-snapchat-camera-kit';
+
+// ..
+
+const cameraPermission =
+  await CameraPermissionManager.getCameraPermissionStatus();
+const microphonePermission =
+  await CameraPermissionManager.getMicrophonePermissionStatus();
+```
+
+A permission status can have the following values:
+
+- `authorized`: Your app is authorized to use said permission. Continue with using the `<DeepAR>` view.
+- `not-determined`: Your app has not yet requested permission from the user. Continue by calling the request functions.
+- `denied`: Your app has already requested permissions from the user, but was explicitly denied. You cannot use the request functions again, but you can use the [Linking API](https://reactnative.dev/docs/linking#opensettings) to redirect the user to the Settings App where he can manually grant the permission.
+- `restricted`: (iOS only) Your app cannot use the Camera or Microphone because that functionality has been restricted, possibly due to active restrictions such as parental controls being in place.
+
+## Requesting Permissions
+
+Use the request functions to prompt the user to give your app permission to use the Camera or Microphone.
+
+```jsx
+import { CameraPermissionManager } from 'react-native-snapchat-camera-kit';
+
+// ..
+
+const cameraPermission =
+  await CameraPermissionManager.requestCameraPermission();
+const microphonePermission =
+  await CameraPermissionManager.requestMicrophonePermission();
+```
+
+- `authorized`: Your app is authorized to use said permission. Continue with using the `<DeepAR>` view.
+- `denied`: The user explicitly denied the permission request alert. You cannot use the request functions again, but you can use the [Linking API](https://reactnative.dev/docs/linking#opensettings) to redirect the user to the Settings App where he can manually grant the permission.
