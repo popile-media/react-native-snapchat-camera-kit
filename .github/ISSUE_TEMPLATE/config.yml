@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: CameraKit Discussions
+    url: https://github.com/popile-media/react-native-snapchat-camera-kit/discussions
+    about: Please ask and answer questions here.
+  - name: Snapchat CameraKit Forum
+    url: https://community.snap.com/snapar/categories/camera-kit
+    about: Please post issues about the native Camera Library (CameraKit) here.

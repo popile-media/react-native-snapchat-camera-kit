@@ -1,0 +1,50 @@
+name: 🐛 Bug Report
+description: File a bug report
+title: "🐛 "
+labels: [🐛 bug]
+body:
+  - type: textarea
+    attributes:
+      label: What were you trying to do?
+      description: Explain what you are trying to do.
+      placeholder: I wanted to take a picture.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Reproduceable Code
+      description: Share a small reproduceable code snippet here (or the entire file if necessary). This will be automatically formatted into code, so no need for backticks.
+      render: tsx
+  - type: textarea
+    attributes:
+      label: What happened instead?
+      description: Explain what happened instead of the desired outcome. Did something crash?
+      placeholder: The app crashes with an `InvalidPhotoCodec` error.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Relevant log output
+      description: Please copy and paste any relevant log output (Xcode Logs/Android Studio Logcat). This will be automatically formatted into code, so no need for backticks.
+      render: shell
+  - type: input
+    attributes:
+      label: Device
+      description: Which device are you seeing this Problem on? Mention the full name of the phone, as well as the operating system and version. If you have tested this on multiple devices (ex. Android and iOS) then mention all of those devices (comma separated)
+      placeholder: ex. iPhone 11 Pro (iOS 14.3)
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Library Version
+      description: Which version of react-native-snapchat-camera-kit are you using?
+      placeholder: ex. 1.0.0
+    validations:
+      required: true
+  - type: checkboxes
+    attributes:
+      label: Additional information
+      description: Please check all the boxes that apply
+      options:
+        - label: I searched for [similar issues in this repository](https://github.com/popile-media/react-native-snapchat-camera-kit/issues) and found none.
+          required: true
