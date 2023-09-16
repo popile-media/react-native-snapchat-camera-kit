@@ -7,7 +7,6 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule
 import com.facebook.react.bridge.ReactMethod
 import com.facebook.react.bridge.WritableMap
 import com.facebook.react.module.annotations.ReactModule
-
 import wseemann.media.FFmpegMediaMetadataRetriever
 
 @ReactModule(name = VideoUtilsModule.NAME)
@@ -19,7 +18,10 @@ class VideoUtilsModule(context: ReactApplicationContext) : ReactContextBaseJavaM
   override fun getName(): String = NAME
 
   @ReactMethod
-  fun getMetadata(path: String, promise: Promise) {
+  fun getMetadata(
+    path: String,
+    promise: Promise,
+  ) {
     val map: WritableMap = Arguments.createMap()
 
     val mmr = FFmpegMediaMetadataRetriever()

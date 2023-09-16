@@ -9,13 +9,12 @@ import com.snapchatcamerakit.camera.CameraKitViewModule
 import com.snapchatcamerakit.permissionmanager.CameraPermissionManagerModule
 import com.snapchatcamerakit.videoutils.VideoUtilsModule
 
-
 class SnapchatCameraKitPackage : ReactPackage {
   override fun createNativeModules(reactContext: ReactApplicationContext): List<NativeModule> {
     return listOf(
       CameraKitViewModule(reactContext),
       CameraPermissionManagerModule(reactContext),
-      VideoUtilsModule(reactContext)
+      VideoUtilsModule(reactContext),
     )
   }
 

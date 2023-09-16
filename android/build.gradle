@@ -67,6 +67,7 @@ repositories {
 }
 
 def kotlin_version = getExtOrDefault("kotlinVersion")
+def camerakit_version = getExtOrDefault("cameraKitVersion")
 
 dependencies {
   // For < 0.71, this will be from the local maven repo
@@ -76,23 +77,21 @@ dependencies {
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
   implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2"
 
-  def cameraKitVersion = "1.21.1"
-
   // The main Camera Kit artifact that provides all the core functionality.
-  implementation "com.snap.camerakit:camerakit:$cameraKitVersion"
+  implementation "com.snap.camerakit:camerakit:$camerakit_version"
 
   // Implementation of Camera pipeline for Camera Kit using CameraX library
-  implementation "com.snap.camerakit:support-camerax:$cameraKitVersion"
+  implementation "com.snap.camerakit:support-camerax:$camerakit_version"
 
   // Camera Kit ring light support
-  implementation "com.snap.camerakit:support-snap-flash:$cameraKitVersion"
+  implementation "com.snap.camerakit:support-snap-flash:$camerakit_version"
 
   // Optional dependency that provides ArCore backed Source<ImageProcessor> to enable
   // depth and other ArCore specific features in lenses that require them.
   // Used by the support-camera-layout but can be safely removed if not needed.
-  implementation "com.snap.camerakit:support-arcore:$cameraKitVersion"
+  implementation "com.snap.camerakit:support-arcore:$camerakit_version"
 
-  implementation "com.snap.camerakit:support-camera-layout:$cameraKitVersion"
+  implementation "com.snap.camerakit:support-camera-layout:$camerakit_version"
 
   implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-core:1.0.19'
   implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native:1.0.19'

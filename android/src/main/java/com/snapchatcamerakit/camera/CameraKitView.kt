@@ -10,6 +10,18 @@ import android.view.TextureView
 import android.view.View
 import android.widget.FrameLayout
 import androidx.fragment.app.FragmentActivity
+import com.facebook.react.bridge.ReadableArray
+import com.facebook.react.bridge.ReadableMap
+import com.facebook.react.uimanager.ThemedReactContext
+import com.snap.camerakit.*
+import com.snap.camerakit.lenses.*
+import com.snap.camerakit.support.arcore.ArCoreImageProcessorSource
+import com.snap.camerakit.support.camera.AllowsCameraPreview
+import com.snap.camerakit.support.camera.AspectRatio
+import com.snap.camerakit.support.camera.Crop
+import com.snap.camerakit.support.camerax.CameraXImageProcessorSource
+import com.snap.camerakit.support.permissions.HeadlessFragmentPermissionRequester
+import com.snap.camerakit.support.widget.*
 import com.snapchatcamerakit.R
 import com.snapchatcamerakit.camera.enums.CameraFacings
 import com.snapchatcamerakit.camera.enums.LensEventStatus
@@ -17,18 +29,6 @@ import com.snapchatcamerakit.camera.errors.CameraKitCoreError
 import com.snapchatcamerakit.camera.errors.CameraKitSessionErrorHandler
 import com.snapchatcamerakit.camera.models.Lens
 import com.snapchatcamerakit.camera.video.AudioProcessorSource
-import com.facebook.react.bridge.ReadableArray
-import com.facebook.react.bridge.ReadableMap
-import com.facebook.react.uimanager.ThemedReactContext
-import com.snap.camerakit.*
-import com.snap.camerakit.support.arcore.ArCoreImageProcessorSource
-import com.snap.camerakit.lenses.*
-import com.snap.camerakit.support.camera.AllowsCameraPreview
-import com.snap.camerakit.support.camera.AspectRatio
-import com.snap.camerakit.support.camera.Crop
-import com.snap.camerakit.support.camerax.CameraXImageProcessorSource
-import com.snap.camerakit.support.permissions.HeadlessFragmentPermissionRequester
-import com.snap.camerakit.support.widget.*
 import java.io.Closeable
 import java.util.concurrent.Executors
 
@@ -44,7 +44,7 @@ private val DEFAULT_OPTIONAL_PERMISSIONS =
 class CameraKitView(
   context: Context,
   private var apiKey: String?,
-  private var applicationId: String?
+  private var applicationId: String?,
 ) : FrameLayout(context) {
   companion object {
     val TAG = CameraKitView::class.simpleName
@@ -62,12 +62,13 @@ class CameraKitView(
     // Here we obtain Source of ImageProcessor backed by the CameraX library which simplifies quite a bit
     // of things related to Android camera management. CameraX is one of many options to implement Source,
     // anything that can provide image frames through a SurfaceTexture can be used by CameraKit.
-    val cameraXImageProcessorSource = CameraXImageProcessorSource(
-      context = context,
-      lifecycleOwner = lifecycleOwner,
-      executorService = processorExecutor,
-      videoOutputDirectory = this.context.applicationContext.cacheDir
-    )
+    val cameraXImageProcessorSource =
+      CameraXImageProcessorSource(
+        context = context,
+        lifecycleOwner = lifecycleOwner,
+        executorService = processorExecutor,
+        videoOutputDirectory = this.context.applicationContext.cacheDir,
+      )
 
     // Use cameraXImageProcessorSource as an active source by default.
     activeImageProcessorSource = cameraXImageProcessorSource
@@ -81,7 +82,7 @@ class CameraKitView(
             context = context,
             lifecycleOwner = lifecycleOwner,
             executorService = processorExecutor,
-            videoOutputDirectory = this.context.applicationContext.cacheDir
+            videoOutputDirectory = this.context.applicationContext.cacheDir,
           )
         } else {
           null
@@ -90,14 +91,15 @@ class CameraKitView(
       // This is an implementation of Source<ImageProcessor> that attach ImageProcessor to one of the provided
       // sources according to ImageProcessor requirements to input capabilities.
       SwitchForSurfaceTrackingImageProcessorSource(
-        cameraXImageProcessorSource, surfaceTrackingSourceProvider,
+        cameraXImageProcessorSource,
+        surfaceTrackingSourceProvider,
         { source ->
           if (activeImageProcessorSource != source) {
             this.activeImageProcessorSource = source
             // Call startPreview on attached Source to let it dispatch frames to ImageProcessor.
             startPreview()
           }
-        }
+        },
       )
     } else {
       cameraXImageProcessorSource
@@ -147,28 +149,32 @@ class CameraKitView(
     mirrorHorizontally: Boolean = cameraMirrorHorizontally,
     aspectRatio: AspectRatio = cameraAspectRatio,
     cropToRootViewRatio: Boolean = cameraCropToRootViewRatio,
-    callback: (succeeded: Boolean) -> Unit = {}
+    callback: (succeeded: Boolean) -> Unit = {},
   ) {
     cameraFacingFront = facingFront
     cameraMirrorHorizontally = mirrorHorizontally
     cameraAspectRatio = aspectRatio
     cameraCropToRootViewRatio = cropToRootViewRatio
-    val options = if (mirrorHorizontally) {
-      setOf(ImageProcessor.Input.Option.MirrorFramesHorizontally)
-    } else {
-      emptySet()
-    }
-    val cropOption = if (cropToRootViewRatio) {
-      Crop.Center(Rational(measuredWidth, measuredHeight))
-    } else {
-      Crop.None
-    }
+    val options =
+      if (mirrorHorizontally) {
+        setOf(ImageProcessor.Input.Option.MirrorFramesHorizontally)
+      } else {
+        emptySet()
+      }
+    val cropOption =
+      if (cropToRootViewRatio) {
+        Crop.Center(Rational(measuredWidth, measuredHeight))
+      } else {
+        Crop.None
+      }
 
     // This source is Source.Noop until it gets replaced by one configured for a new Session.
     val configuration =
       AllowsCameraPreview.Configuration.Default(facingFront, aspectRatio, cropOption)
     (activeImageProcessorSource as? AllowsCameraPreview)?.startPreview(
-      configuration, options, callback
+      configuration,
+      options,
+      callback,
     )
   }
 
@@ -209,7 +215,10 @@ class CameraKitView(
     // todo
   }
 
-  fun setInitialLens(id: String, launchData: ReadableMap?) {
+  fun setInitialLens(
+    id: String,
+    launchData: ReadableMap?,
+  ) {
     this.initialLensId = id
     this.initialLensLaunchData = launchData
   }
@@ -233,9 +242,10 @@ class CameraKitView(
     return if (!supported(context)) {
       false
     } else {
-      cameraKitSession = newSession().also {
-        onSessionAvailable(it)
-      }
+      cameraKitSession =
+        newSession().also {
+          onSessionAvailable(it)
+        }
       startPreview()
       true
     }
@@ -250,9 +260,11 @@ class CameraKitView(
       .applicationId(this.applicationId)
       .imageProcessorSource(this.imageProcessorSource)
       .audioProcessorSource(this.audioProcessorSource)
-      .handleErrorsWith(CameraKitSessionErrorHandler {
-        invokeOnError(ref, CameraKitCoreError(it))
-      })
+      .handleErrorsWith(
+        CameraKitSessionErrorHandler {
+          invokeOnError(ref, CameraKitCoreError(it))
+        },
+      )
       .configureLenses {
         // dispatchTouchEventsTo(previewGestureHandler)
         configureCache {
@@ -265,7 +277,7 @@ class CameraKitView(
   private fun handlePermissions() {
     HeadlessFragmentPermissionRequester(
       requireActivity(),
-      (requiredPermissions + optionalPermissions).toSet()
+      (requiredPermissions + optionalPermissions).toSet(),
     ) { results ->
       if (requiredPermissions.all { results[it] == true }) {
         // We schedule the block below to run on the next frame in order to allow CameraLayout users to provide
@@ -307,7 +319,7 @@ class CameraKitView(
           this.initialLensId!!,
           it,
           this.initialLensLaunchData,
-          null
+          null,
         )
       }
     }
