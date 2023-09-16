@@ -1,15 +1,11 @@
 {
   "compilerOptions": {
-    "baseUrl": "./",
-    "paths": {
-      "react-native-snapchat-camera-kit": ["./src/index"]
-    },
+    "allowJs": false,
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
     "esModuleInterop": true,
-    "importsNotUsedAsValues": "error",
     "forceConsistentCasingInFileNames": true,
-    "jsx": "react",
+    "jsx": "react-native",
     "lib": ["esnext"],
     "module": "esnext",
     "moduleResolution": "node",
@@ -23,8 +19,9 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
-    "target": "esnext"
+    "target": "esnext",
+    "outDir": "lib"
   },
-  "exclude": ["node_modules", "documentation", "example"],
+  "exclude": ["node_modules", "documentation", "lib", "example"],
   "include": ["src", "babel.config.js"]
 }

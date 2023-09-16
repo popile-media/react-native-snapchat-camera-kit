@@ -37,7 +37,14 @@
     "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build",
     "commit": "git-cz",
     "docs:build": "cd documentation && yarn build",
-    "docs:serve": "cd documentation && yarn serve"
+    "docs:serve": "cd documentation && yarn serve",
+    "check:all": "scripts/check-all.sh",
+    "check:js": "yarn lint --fix && yarn typescript",
+    "check:android": "scripts/ktlint.sh",
+    "check:ios": "scripts/swiftlint.sh && scripts/swiftformat.sh",
+    "clean:js": "scripts/clean-js.sh",
+    "clean:android": "scripts/clean-android.sh",
+    "clean:ios": "scripts/clean-ios.sh"
   },
   "keywords": [
     "react-native",

@@ -1,0 +1,12 @@
+{
+  "extends": "../tsconfig",
+  "compilerOptions": {
+    "paths": {
+      "react-native-snapchat-camera-kit": ["../src/index"]
+    },
+    "moduleResolution": "node"
+  },
+  "files": ["typings/react-native-config.d.ts"],
+  "include": ["src", "index.js"],
+  "exclude": ["node_modules"]
+}
