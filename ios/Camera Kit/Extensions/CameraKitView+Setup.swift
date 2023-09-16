@@ -9,21 +9,21 @@ import AVFoundation
 
 // MARK: General Camera Setup
 
-extension CameraKitView {    
+extension CameraKitView {
     /// handle camera setup
     func setupCamera(preset: AVCaptureSession.Preset) {
         cameraController?.configure(
-            orientation: self.windowInterfaceOrientation(),
+            orientation: windowInterfaceOrientation(),
             textInputContextProvider: nil,
             agreementsPresentationContextProvider: nil,
             preset: preset,
             completion: nil
         )
-        
+
         cameraController?.cameraKit.add(output: previewView)
         cameraController?.uiDelegate = self
     }
-    
+
     /// create main view
     func setupView() {
         addSubview(previewView)
@@ -34,7 +34,7 @@ extension CameraKitView {
             previewView.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
     }
-    
+
     /// create ring light view
     func setupRingLight() {
         addSubview(ringLightView)
@@ -45,26 +45,26 @@ extension CameraKitView {
             ringLightView.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
     }
-    
+
     /// add ability to zoom
     func setupZoomAction() {
         pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(zoom(sender:)))
         previewView.addGestureRecognizer(pinchGestureRecognizer!)
         previewView.automaticallyConfiguresTouchHandler = true
     }
-    
+
     /// remove ability to zoom
     func removeZoomAction() {
         previewView.removeGestureRecognizer(pinchGestureRecognizer!)
         previewView.automaticallyConfiguresTouchHandler = false
     }
-    
+
     /// add ability to focus
     func setupTapToFocusAction() {
         singleTap = UITapGestureRecognizer(target: self, action: #selector(handleSingleTap(sender:)))
         previewView.addGestureRecognizer(singleTap!)
     }
-    
+
     /// remove ability to focus
     func removeTapToFocusAction() {
         previewView.removeGestureRecognizer(singleTap!)

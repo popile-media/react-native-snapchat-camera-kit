@@ -13,31 +13,31 @@ import Foundation
  * Represents a JavaScript Promise instance. `reject()` and `resolve()` should only be called once.
  */
 class Promise {
-  init(resolver: @escaping RCTPromiseResolveBlock, rejecter: @escaping RCTPromiseRejectBlock) {
-    self.resolver = resolver
-    self.rejecter = rejecter
-  }
+    init(resolver: @escaping RCTPromiseResolveBlock, rejecter: @escaping RCTPromiseRejectBlock) {
+        self.resolver = resolver
+        self.rejecter = rejecter
+    }
 
-  func reject(error: CameraError, cause: NSError?) {
-    rejecter(error.code, error.message, cause)
-  }
+    func reject(error: CameraError, cause: NSError?) {
+        rejecter(error.code, error.message, cause)
+    }
 
-  func reject(error: CameraError) {
-    reject(error: error, cause: nil)
-  }
+    func reject(error: CameraError) {
+        reject(error: error, cause: nil)
+    }
 
-  func resolve(_ value: Any?) {
-    resolver(value)
-  }
+    func resolve(_ value: Any?) {
+        resolver(value)
+    }
 
-  func resolve() {
-    resolve(nil)
-  }
+    func resolve() {
+        resolve(nil)
+    }
 
-  // MARK: Private
+    // MARK: Private
 
-  private let resolver: RCTPromiseResolveBlock
-  private let rejecter: RCTPromiseRejectBlock
+    private let resolver: RCTPromiseResolveBlock
+    private let rejecter: RCTPromiseRejectBlock
 }
 
 /**
@@ -47,14 +47,14 @@ class Promise {
  * The error thrown by the `block` should be a `CameraError`
  */
 func withPromise(_ promise: Promise, _ block: () throws -> Any?) {
-  do {
-    let result = try block()
-    promise.resolve(result)
-  } catch let error as CameraError {
-    promise.reject(error: error)
-  } catch let error as NSError {
-    promise.reject(error: CameraError.unknown(message: error.description), cause: error)
-  }
+    do {
+        let result = try block()
+        promise.resolve(result)
+    } catch let error as CameraError {
+        promise.reject(error: error)
+    } catch let error as NSError {
+        promise.reject(error: CameraError.unknown(message: error.description), cause: error)
+    }
 }
 
 /**
@@ -64,5 +64,5 @@ func withPromise(_ promise: Promise, _ block: () throws -> Any?) {
  * The error thrown by the `block` should be a `CameraError`
  */
 func withPromise(resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock, _ block: () throws -> Any?) {
-  return withPromise(Promise(resolver: resolve, rejecter: reject), block)
+    return withPromise(Promise(resolver: resolve, rejecter: reject), block)
 }

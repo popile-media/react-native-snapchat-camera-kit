@@ -8,13 +8,13 @@
 import SCSDKCameraKit
 
 public class CameraKitSessionErrorHandler: ErrorHandler {
-  var handlerCallback: ((_ error: NSException) -> Void)?
-  
-  init(handlerCallback: ( (_ error: NSException) -> Void)? = nil) {
-    self.handlerCallback = handlerCallback
-  }
-  
-  public func handleError(_ error: NSException) {
-    self.handlerCallback!(error)
-  }
+    var handlerCallback: ((_ error: NSException) -> Void)?
+
+    init(handlerCallback: ((_ error: NSException) -> Void)? = nil) {
+        self.handlerCallback = handlerCallback
+    }
+
+    public func handleError(_ error: NSException) {
+        handlerCallback!(error)
+    }
 }

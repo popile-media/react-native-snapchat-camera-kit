@@ -6,15 +6,15 @@
 //
 
 public final class MetaModel {
-  var supported: Bool
-  
-  init(supported: Bool) {
-    self.supported = supported
-  }
-  
-  func toBridge() -> [String: Any] {
-    return [
-      "supported": self.supported
-    ]
-  }
+    var supported: Bool
+
+    init(supported: Bool) {
+        self.supported = supported
+    }
+
+    func toBridge() -> [String: Any] {
+        return [
+            "supported": supported,
+        ]
+    }
 }

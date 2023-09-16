@@ -8,27 +8,27 @@
 import SCSDKCameraKit
 
 public final class LensModel {
-  var lens: Lens
+    var lens: Lens
 
-  init(lens: Lens) {
-    self.lens = lens
-  }
-  
-  func toBridge() -> [String: Any] {
-    return [
-      "id": self.lens.id,
-      "groupId": self.lens.groupId,
-      "name": self.lens.name ?? "",
-      "facingPreference": LensFacingPreferenceModel(facing: self.lens.facingPreference).toString(),
-      "icons": (self.lens.iconUrl != nil) ? [[
-        "uri": self.lens.iconUrl?.absoluteString,
-        "type": nil
-      ]] : [],
-      "previews": (self.lens.preview.imageUrl != nil) ? [[
-        "uri": self.lens.preview.imageUrl?.absoluteString,
-        "type": nil
-      ]] : [],
-      "vendorData": self.lens.vendorData
-    ]
-  }
+    init(lens: Lens) {
+        self.lens = lens
+    }
+
+    func toBridge() -> [String: Any] {
+        return [
+            "id": lens.id,
+            "groupId": lens.groupId,
+            "name": lens.name ?? "",
+            "facingPreference": LensFacingPreferenceModel(facing: lens.facingPreference).toString(),
+            "icons": (lens.iconUrl != nil) ? [[
+                "uri": lens.iconUrl?.absoluteString,
+                "type": nil,
+            ]] : [],
+            "previews": (lens.preview.imageUrl != nil) ? [[
+                "uri": lens.preview.imageUrl?.absoluteString,
+                "type": nil,
+            ]] : [],
+            "vendorData": lens.vendorData,
+        ]
+    }
 }

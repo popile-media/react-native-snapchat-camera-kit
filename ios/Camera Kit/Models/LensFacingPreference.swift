@@ -8,20 +8,20 @@
 import SCSDKCameraKit
 
 public final class LensFacingPreferenceModel {
-  private var facing: LensFacingPreference
-  
-  init(facing: LensFacingPreference) {
-    self.facing = facing
-  }
-  
-  func toString() -> String {
-    switch self.facing {
-    case .back:
-      return "back"
-    case .front:
-      return "front"
-    default:
-      return "unspecified"
+    private var facing: LensFacingPreference
+
+    init(facing: LensFacingPreference) {
+        self.facing = facing
     }
-  }
+
+    func toString() -> String {
+        switch facing {
+        case .back:
+            return "back"
+        case .front:
+            return "front"
+        default:
+            return "unspecified"
+        }
+    }
 }

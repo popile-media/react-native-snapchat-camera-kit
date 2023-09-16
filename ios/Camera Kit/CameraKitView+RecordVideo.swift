@@ -8,53 +8,52 @@
 import AVFoundation
 
 extension CameraKitView {
-  func startRecording(options: NSDictionary, promise: Promise) {
-    withPromise(promise) {
-        
+    func startRecording(options _: NSDictionary, promise: Promise) {
+        withPromise(promise) {
 //        var presetString = options.value(forKey: "preset") as? String
 //        var sessionPreset: AVCaptureSession.Preset?
 //
 //        do {
 //            var sessionPreset = try AVCaptureSession.Preset(withString: presetString!)
 //        }
-        
-        return self.cameraController?.startRecording()
-    }
-  }
-  
-  func pauseRecording(promise: Promise) {
-    // todo
-  }
-  
-  func resumeRecording(promise: Promise) {
-    // todo
-  }
-  
-  func cancelRecording(promise: Promise) {
-    // todo
-  }
-  
-  func stopRecording(promise: Promise) {
-    withPromise(promise) {
-      self.cameraController?.finishRecording { url, error in
-        if (url != nil) {
-          self.invokeOnVideoRecordingFinished(path: url!)
+
+            self.cameraController?.startRecording()
         }
-        
-        if (error != nil) {
-          // todo
-        }
-      }
     }
-  }
-  
-  // Events
-  
-  internal final func invokeOnVideoRecordingFinished(path: URL) {
-    guard let onVideoRecordingFinished = self.onVideoRecordingFinished else { return }
-    
-    onVideoRecordingFinished([
-        "path": path.absoluteString
-    ])
-  }
+
+    func pauseRecording(promise _: Promise) {
+        // todo
+    }
+
+    func resumeRecording(promise _: Promise) {
+        // todo
+    }
+
+    func cancelRecording(promise _: Promise) {
+        // todo
+    }
+
+    func stopRecording(promise: Promise) {
+        withPromise(promise) {
+            self.cameraController?.finishRecording { url, error in
+                if url != nil {
+                    self.invokeOnVideoRecordingFinished(path: url!)
+                }
+
+                if error != nil {
+                    // todo
+                }
+            }
+        }
+    }
+
+    // Events
+
+    final func invokeOnVideoRecordingFinished(path: URL) {
+        guard let onVideoRecordingFinished = onVideoRecordingFinished else { return }
+
+        onVideoRecordingFinished([
+            "path": path.absoluteString,
+        ])
+    }
 }

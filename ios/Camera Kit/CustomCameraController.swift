@@ -12,16 +12,15 @@ import SCSDKCameraKit
 import UIKit
 
 public protocol CustomCameraControllerUIDelegate: AnyObject {
-    
     /// Notifies the delegate that the camera controller has resolved a new list of available lenses
     /// - Parameters:
     ///   - controller: The camera controller.
     ///   - lenses: The newly available lenses.
     func lensRepositoryGroupObserver(_ controller: CustomCameraController, updatedLenses lenses: [Lens], groupID: String)
-    
+
     /// - Parameter controller: The camera controller.
     func lensPrefetcherObserver(_ controller: CustomCameraController, lens: Lens, status: LensFetchStatus)
-    
+
     /// Notifies the delegate that a lens has requested that a hint should be displayed
     /// - Parameters:
     ///   - controller: The camera controller.
@@ -29,59 +28,64 @@ public protocol CustomCameraControllerUIDelegate: AnyObject {
     ///   - lens: The requesting lens.
     ///   - autohide: Whether or not the hint should be automatically hidden, after a callee-determined amount of time.
     func lensHintDelegate(
-        _ controller: CustomCameraController, requestedHintDisplay hint: String, for lens: Lens, autohide: Bool)
-    
+        _ controller: CustomCameraController, requestedHintDisplay hint: String, for lens: Lens, autohide: Bool
+    )
+
     /// Notifies the delegate that any hints requested by the specified lens should be hidden
     /// - Parameters:
     ///   - controller: The camera controller.
     ///   - lens: The lens whose hints should be hidden.
     func lensHintDelegate(_ controller: CustomCameraController, requestedHintHideFor lens: Lens)
-    
 }
 
 // MARK: Class Definition and State
+
 /// A controller which manages the camera and lenses stack on behalf of its owner
 open class CustomCameraController: NSObject, LensRepositoryGroupObserver, LensPrefetcherObserver, LensHintDelegate {
-    
     // MARK: - Public API
+
     // MARK: Public vars
+
     /// A capture session we'll use for camera input.
     public let captureSession: AVCaptureSession
-    
+
     /// The CameraKit session
     public let cameraKit: CameraKitProtocol
-    
+
     /// The position of the camera.
     public private(set) var cameraPosition: AVCaptureDevice.Position = .front {
         didSet {
             cameraKit.cameraPosition = cameraPosition
         }
     }
-    
+
     public var portraitController: PortraitAdjustmentController?
     public var toneMapController: ToneMapAdjustmentController?
-    
+
     // MARK: Outputs
+
     /// An output used for taking still photos.
     public private(set) var photoCaptureOutput: PhotoCaptureOutput?
-    
+
     /// An output used for recording videos.
     public private(set) var recorder: Recorder?
-    
+
     // MARK: Delegates
+
     /// Snapchat delegate for requests to open the main Snapchat app.
     public weak var snapchatDelegate: SnapchatDelegate?
-    
+
     /// Delegate for responding to UI requests from camera controller.
     public weak var uiDelegate: CustomCameraControllerUIDelegate?
-    
+
     // MARK: State
+
     /// The currently selected and active lens.
     public private(set) var currentLens: Lens?
-    
+
     /// The launch data of the active lens.
     public private(set) var currentLaunchData: LensLaunchData?
-    
+
     /// List of lens repository groups to observe/show in lens picker
     public var groupIDs: [String] = [] {
         didSet {
@@ -99,8 +103,9 @@ open class CustomCameraController: NSObject, LensRepositoryGroupObserver, LensPr
             // cameraKit.lenses.repository.lens(id: "123", groupID: "1");
         }
     }
-    
+
     // MARK: Initializers
+
     /// Returns a camera controller that is initialized with a newly created AVCaptureSession stack
     /// and CameraKit session with the specified configuration and list of group IDs.
     /// - Parameter sessionConfig: Config to configure session with application id and api token.
@@ -120,7 +125,7 @@ open class CustomCameraController: NSObject, LensRepositoryGroupObserver, LensPr
         let captureSession = AVCaptureSession()
         self.init(cameraKit: cameraKit, captureSession: captureSession)
     }
-    
+
     /// Init with camera kit session, capture session, and lens holder
     /// - Parameters:
     ///   - cameraKit: camera kit session
@@ -130,8 +135,9 @@ open class CustomCameraController: NSObject, LensRepositoryGroupObserver, LensPr
         self.captureSession = captureSession
         super.init()
     }
-    
+
     // MARK: Configuration
+
     /// Configures the overall camera and lenses stack.
     /// - Parameters:
     ///   - orientation: the orientation
@@ -151,27 +157,28 @@ open class CustomCameraController: NSObject, LensRepositoryGroupObserver, LensPr
             configureLenses(
                 orientation: orientation,
                 textInputContextProvider: textInputContextProvider,
-                agreementsPresentationContextProvider: agreementsPresentationContextProvider)
-            //configureAdjustments()
+                agreementsPresentationContextProvider: agreementsPresentationContextProvider
+            )
+            // configureAdjustments()
             completion?()
         }
     }
-    
+
     open func configureAdjustments() {
         let isBlurSupporting = checkBlurSupporting()
         let isToneModeSupporting = checkToneModeSupporting()
-        
-        if (isBlurSupporting) {
-            portraitController = try? cameraKit.adjustments.processor?.apply(adjustment:PortraitAdjustment())
+
+        if isBlurSupporting {
+            portraitController = try? cameraKit.adjustments.processor?.apply(adjustment: PortraitAdjustment())
             portraitController?.blur = 0
         }
-        
-        if (isToneModeSupporting) {
-            toneMapController = try? cameraKit.adjustments.processor?.apply(adjustment:ToneMapAdjustment())
+
+        if isToneModeSupporting {
+            toneMapController = try? cameraKit.adjustments.processor?.apply(adjustment: ToneMapAdjustment())
             toneMapController?.amount = 0
         }
     }
-    
+
     /// Configures the lenses pipeline.
     /// - Parameter orientation: the camera orientation.
     open func configureLenses(
@@ -183,11 +190,11 @@ open class CustomCameraController: NSObject, LensRepositoryGroupObserver, LensPr
         // details of AVCaptureSession configuration (such as setting the pixel format).
         // You are still responsible for normal configuration of the session (adding the AVCaptureDevice, etc).
         let input = AVSessionInput(session: captureSession)
-        
+
         // Create a CameraKit ARKit input. AVSessionInput is an input that CameraKit provides that wraps up lens-specific
         // details of ARSession configuration.
         let arInput = ARSessionInput()
-        
+
         // Start the actual CameraKit session. Once the session is started, CameraKit will begin processing frames and
         // sending output. The lens processor (cameraKit.lenses.processor) will be instantiated at this point, and
         // you can start sending commands to it (such as applying/clearing lenses).
@@ -201,15 +208,15 @@ open class CustomCameraController: NSObject, LensRepositoryGroupObserver, LensPr
             textInputContextProvider: textInputContextProvider,
             agreementsPresentationContextProvider: agreementsPresentationContextProvider
         )
-        
+
         // Start the capture session. It's important you start the capture session after starting the CameraKit session
         // because the CameraKit input and session configures the capture session implicitly and you may run into a
         // race condition which causes some audio and video output frames to be lost, resulting in a blank preview view
         input.startRunning()
-        
+
         cameraKit.presentAgreementsImmediately()
     }
-    
+
     /// Configures the data provider for lenses. Subclasses may override this to customize their data provider.
     /// - Returns: a configured data provider.
     open func configureDataProvider() -> DataProviderComponent {
@@ -223,40 +230,41 @@ open class CustomCameraController: NSObject, LensRepositoryGroupObserver, LensPr
             mediaPicker: nil
         )
     }
-    
+
     // MARK: Camera Control
+
     /// Zoom in by a given factor from whatever the current zoom level is
     /// - Parameter factor: the factor to zoom by.
     /// - Note: the zoom level will be capped to a minimum level of 1.0.
     public func zoomExistingLevel(by factor: CGFloat) {
         zoomLevel = max(1, lastZoomLevel * factor)
     }
-    
+
     /// Save whatever the current zoom level is.
     public func finalizeZoom() {
         lastZoomLevel = zoomLevel
     }
-    
+
     /// Flips the camera to the other side
     public func flipCamera() {
         cameraPosition = cameraPosition == .front ? .back : .front
     }
-    
+
     /// Options to support when setting a point of interest
     public struct PointOfInterestOptions: OptionSet {
         public let rawValue: Int
-        
+
         public init(rawValue: Int) {
             self.rawValue = rawValue
         }
-        
+
         // Option to enable rebalancing exposure when setting the camera's point of interest
         public static let exposure = PointOfInterestOptions(rawValue: 1 << 0)
-        
+
         // Option to enable refocusing the camera when setting the camera's point of interest
         public static let focus = PointOfInterestOptions(rawValue: 1 << 1)
     }
-    
+
     /// Sets camera point of interest for operations in the option set. Also adds observers for the current device such
     /// that once the focusing/exposure rebalancing operations are complete, continuous autofocus/autoexposure
     /// are restored (see observeValue)
@@ -269,59 +277,61 @@ open class CustomCameraController: NSObject, LensRepositoryGroupObserver, LensPr
         else {
             return
         }
-        
+
         do {
             try device.lockForConfiguration()
-            
+
             if options.contains(.exposure) && device.isExposurePointOfInterestSupported
                 && device.isExposureModeSupported(.autoExpose)
             {
                 isAdjustingFocusObservation = device.observe(
                     \.isAdjustingExposure,
-                     options: .new,
-                     changeHandler: restoreContinuousAutoExposure
+                    options: .new,
+                    changeHandler: restoreContinuousAutoExposure
                 )
-                
+
                 device.exposurePointOfInterest = point
                 device.exposureMode = .autoExpose
             }
-            
+
             if options.contains(.focus) && device.isFocusPointOfInterestSupported
                 && device.isFocusModeSupported(.autoFocus)
             {
                 isAdjustingExposureObservation = device.observe(
                     \.isAdjustingFocus,
-                     options: .new,
-                     changeHandler: restoreContinuousAutoFocus
+                    options: .new,
+                    changeHandler: restoreContinuousAutoFocus
                 )
-                
+
                 device.focusPointOfInterest = point
                 device.focusMode = .autoFocus
             }
-            
+
             device.unlockForConfiguration()
         } catch {
             print("[CameraKit] Failed to lock device for configuration when trying to set point of interest")
             return
         }
     }
-    
+
     // MARK: Taking Photos
+
     /// Takes a photo.
     /// - Parameter completion: completion to be called with the photo or an error.
     public func takePhoto(completion: ((UIImage?, Error?) -> Void)?) {
         let settings = AVCapturePhotoSettings()
-        
+
         photoCaptureOutput?.capture(
             with: settings,
             outputSize: OutputSizeHelper.normalizedSize(
                 for: cameraKit.activeInput.frameSize,
-                aspectRatio: UIScreen.main.bounds.width / UIScreen.main.bounds.height)
+                aspectRatio: UIScreen.main.bounds.width / UIScreen.main.bounds.height
+            )
         ) { image, error in
             completion?(image, error)
         }
     }
-    
+
     /// Configures the photo output to be ready to capture a new photo.
     fileprivate func configurePhotoCapture() {
         // Add AVCapturePhotoOutput to capture session
@@ -334,9 +344,10 @@ open class CustomCameraController: NSObject, LensRepositoryGroupObserver, LensPr
             cameraKit.add(output: photoCaptureOutput)
         }
     }
-    
+
     // MARK: LensRepositoryGroupObserver
-    open func repository(_ repository: LensRepository, didUpdateLenses lenses: [Lens], forGroupID groupID: String) {
+
+    open func repository(_: LensRepository, didUpdateLenses lenses: [Lens], forGroupID groupID: String) {
         // prefetch lens content (don't prefetch bundled since content is local already)
         if !groupID.contains(SCCameraKitLensRepositoryBundledGroup) {
             // the object returned here can be used to cancel the ongoing prefetch operation if need be
@@ -345,7 +356,7 @@ open class CustomCameraController: NSObject, LensRepositoryGroupObserver, LensPr
                 cameraKit.lenses.prefetcher.addStatusObserver(self, lens: lens)
             }
         }
-        
+
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             let lenses = self.groupIDs.flatMap {
@@ -354,42 +365,42 @@ open class CustomCameraController: NSObject, LensRepositoryGroupObserver, LensPr
             self.uiDelegate?.lensRepositoryGroupObserver(self, updatedLenses: lenses, groupID: groupID)
         }
     }
-    
+
     open func repository(
-        _ repository: LensRepository, didFailToUpdateLensesForGroupID groupID: String, error: Error?
-    ) {
-    }
-    
+        _: LensRepository, didFailToUpdateLensesForGroupID _: String, error _: Error?
+    ) {}
+
     // MARK: LensPrefetcherObserver
-    public func prefetcher(_ prefetcher: LensPrefetcher, didUpdate lens: Lens, status: LensFetchStatus) {
+
+    public func prefetcher(_: LensPrefetcher, didUpdate lens: Lens, status: LensFetchStatus) {
         guard let currentLens = currentLens,
               lens.id == currentLens.id,
               lens.groupId == currentLens.groupId
         else {
             return
         }
-        
+
         DispatchQueue.main.async {
             self.uiDelegate?.lensPrefetcherObserver(self, lens: lens, status: status)
         }
     }
-    
+
     // MARK: Recording
-    
-    public func startRecording() {        
+
+    public func startRecording() {
         configureRecorder()
         recorder?.startRecording()
     }
-    
+
     public func cancelRecording() {
         finishRecording(completion: nil)
     }
-    
+
     public func finishRecording(completion: ((URL?, Error?) -> Void)?) {
         guard let recorder = recorder else { return }
         recorder.finishRecording { url, error in
             DispatchQueue.main.async {
-                if (url != nil) {
+                if url != nil {
                     completion?(url, nil)
                 } else {
                     completion?(nil, error)
@@ -397,8 +408,9 @@ open class CustomCameraController: NSObject, LensRepositoryGroupObserver, LensPr
             }
         }
     }
-    
+
     // MARK: Lens Application
+
     /// Apply a specified lens.
     /// - Parameters:
     ///   - lens: selected lens
@@ -408,7 +420,7 @@ open class CustomCameraController: NSObject, LensRepositoryGroupObserver, LensPr
             // set current lens right away so we don't apply same lens twice
             self?.currentLens = lens
             self?.currentLaunchData = launchData
-            
+
             guard let self = self, let processor = self.cameraKit.lenses.processor else {
                 completion?(false)
                 return
@@ -416,12 +428,12 @@ open class CustomCameraController: NSObject, LensRepositoryGroupObserver, LensPr
             processor.apply(lens: lens, launchData: launchData ?? self.launchData(for: lens)) { [weak self] success in
                 if success {
                     print("\(lens.name ?? "Unnamed") (\(lens.id)) Applied")
-                    
+
                     DispatchQueue.main.async { [weak self] in
                         // set camera position based on facing preference
                         self?.changeCameraPosition(with: lens.facingPreference)
                     }
-                    
+
                 } else {
                     self?.currentLens = nil
                     print("Lens failed to apply")
@@ -430,7 +442,7 @@ open class CustomCameraController: NSObject, LensRepositoryGroupObserver, LensPr
             }
         }
     }
-    
+
     /// Clear the currently selected lens, and return to unmodified camera feed.
     ///   - willReapply: if true, cameraKit will not clear out the "currentLens" property, and reapplyCurrentLens will apply the lens that was cleared.
     ///   - completion: callback on completion with success/failure
@@ -441,98 +453,101 @@ open class CustomCameraController: NSObject, LensRepositoryGroupObserver, LensPr
                     self.currentLens = nil
                     self.currentLaunchData = nil
                 }
-                
+
                 completion?(completed)
             }
         }
     }
-    
+
     /// If a lens has already been applied, reapply it.
     public func reapplyCurrentLens() {
         guard let currentLens = currentLens else { return }
         cameraKit.lenses.processor?.apply(lens: currentLens, launchData: currentLaunchData, completion: nil)
     }
-    
+
     // MARK: Adjustments
-    
+
     public func checkBlurSupporting() -> Bool {
-        if ((cameraKit.adjustments.processor?.isAdjustmentAvailable(PortraitAdjustment())) != nil) {
+        if (cameraKit.adjustments.processor?.isAdjustmentAvailable(PortraitAdjustment())) != nil {
             return true
         }
-        
+
         return false
     }
-    
+
     public func checkToneModeSupporting() -> Bool {
-        if ((cameraKit.adjustments.processor?.isAdjustmentAvailable(ToneMapAdjustment())) != nil) {
+        if (cameraKit.adjustments.processor?.isAdjustmentAvailable(ToneMapAdjustment())) != nil {
             return true
         }
-        
+
         return false
     }
-    
+
     public func adjustBlur(amount: Double) {
         portraitController?.blur = amount
     }
-    
+
     public func adjustTone(amount: Double) {
         toneMapController?.amount = amount
     }
-    
+
     // MARK: LensHintDelegate
+
     public func lensProcessor(
-        _ lensProcessor: LensProcessor, shouldDisplayHint hint: String, for lens: Lens, autohide: Bool
+        _: LensProcessor, shouldDisplayHint hint: String, for lens: Lens, autohide: Bool
     ) {
         uiDelegate?.lensHintDelegate(self, requestedHintDisplay: hint, for: lens, autohide: autohide)
     }
-    
-    public func lensProcessor(_ lensProcessor: LensProcessor, shouldHideAllHintsFor lens: Lens) {
+
+    public func lensProcessor(_: LensProcessor, shouldHideAllHintsFor lens: Lens) {
         uiDelegate?.lensHintDelegate(self, requestedHintHideFor: lens)
     }
-    
+
     // MARK: - Private API
+
     // MARK: Private vars
+
     /// Temporary state that holds the starting point for the last zoom level
     /// Since pinching is a relative operation, we need to keep whatever it was left at last to compare.
     private var lastZoomLevel: CGFloat = 1
-    
+
     /// serial queue used to apply/clear lenses
     fileprivate let lensQueue = DispatchQueue(label: "com.snap.camerakit.sample.lensqueue", qos: .userInitiated)
-    
+
     /// The current camera input device
     fileprivate var cameraInputDevice: AVCaptureDevice? {
         captureSession.inputs
-            .compactMap({ ($0 as? AVCaptureDeviceInput)?.device })
+            .compactMap { ($0 as? AVCaptureDeviceInput)?.device }
             .first(where: { $0.hasMediaType(.video) })
     }
-    
+
     fileprivate var isAdjustingExposureObservation: NSKeyValueObservation?
-    
+
     fileprivate var isAdjustingFocusObservation: NSKeyValueObservation?
 }
 
 // MARK: Camera Pipeline Configuration
-extension CustomCameraController {
-    
+
+private extension CustomCameraController {
     /// Configures the capture session.
-    fileprivate func configureCaptureSession(preset: AVCaptureSession.Preset) {
+    func configureCaptureSession(preset: AVCaptureSession.Preset) {
         captureSession.beginConfiguration()
         captureSession.sessionPreset = preset
         configureDevice(for: .video)
         captureSession.commitConfiguration()
     }
-    
+
     /// Prompts the user for access, and then calls a completion closure. If the user has already granted access, calls the closure synchronously.
     /// - Parameter completion: the completion closure to call.
-    fileprivate func promptForAccessIfNeeded(completion: @escaping () -> Void) {
+    func promptForAccessIfNeeded(completion: @escaping () -> Void) {
         guard
             AVCaptureDevice.authorizationStatus(for: .video) == .notDetermined
-                || AVCaptureDevice.authorizationStatus(for: .audio) == .notDetermined
+            || AVCaptureDevice.authorizationStatus(for: .audio) == .notDetermined
         else {
             completion()
             return
         }
-        
+
         AVCaptureDevice.requestAccess(for: .video) { _ in
             AVCaptureDevice.requestAccess(for: .audio) { _ in
                 DispatchQueue.main.async {
@@ -541,14 +556,14 @@ extension CustomCameraController {
             }
         }
     }
-    
+
     /// Configures the device specified.
     /// - Parameter mediaType: the media type, audio or video
-    fileprivate func configureDevice(for mediaType: AVMediaType) {
+    func configureDevice(for mediaType: AVMediaType) {
         guard
             let device = mediaType == .video
-                ? AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: cameraPosition)
-                : AVCaptureDevice.default(for: mediaType),
+            ? AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: cameraPosition)
+            : AVCaptureDevice.default(for: mediaType),
             let input = try? AVCaptureDeviceInput(device: device),
             captureSession.canAddInput(input)
         else {
@@ -556,7 +571,7 @@ extension CustomCameraController {
         }
         captureSession.addInput(input)
     }
-    
+
     /// Directly sets the zoom level, if possible. Certain inputs may ignore calls to this function (eg: ARKit)
     private var zoomLevel: CGFloat {
         get {
@@ -581,39 +596,37 @@ extension CustomCameraController {
                 print("[CameraKit] Failed to lock device for configuration when trying to adjust zoom level")
                 return
             }
-            
         }
     }
-    
 }
 
 // MARK: Recording
-extension CustomCameraController {
-    
+
+private extension CustomCameraController {
     /// Configures the recorder to be ready to record a new video.
-    fileprivate func configureRecorder() {
+    func configureRecorder() {
         if let old = recorder {
             cameraKit.remove(output: old.output)
         }
-                
+
         recorder = try? Recorder(
             url: URL(fileURLWithPath: "\(NSTemporaryDirectory())\(UUID().uuidString).mp4"),
             orientation: cameraKit.activeInput.frameOrientation,
             size: OutputSizeHelper.normalizedSize(
                 for: cameraKit.activeInput.frameSize,
                 aspectRatio: UIScreen.main.bounds.width / UIScreen.main.bounds.height,
-                orientation: cameraKit.activeInput.frameOrientation)
+                orientation: cameraKit.activeInput.frameOrientation
+            )
         )
         if let recorder = recorder {
             cameraKit.add(output: recorder.output)
         }
     }
-    
 }
 
 // MARK: Lens Application
+
 extension CustomCameraController {
-    
     /// Generates the launch data for the lens. By default, this is just the vendor data attached to the lens.
     /// - Parameter lens: the lens to generate launch data for
     /// - Returns: launch data.
@@ -621,40 +634,39 @@ extension CustomCameraController {
         guard !lens.vendorData.isEmpty else {
             return EmptyLensLaunchData()
         }
-        
+
         let launchDataBuilder = LensLaunchDataBuilder()
         for (key, val) in lens.vendorData {
             launchDataBuilder.add(string: val, key: key)
         }
         return launchDataBuilder.launchData ?? EmptyLensLaunchData()
     }
-    
 }
 
 // MARK: Notifications
+
 extension CustomCameraController {
-    
     /// Observes notifications relevant to the camera controller.
     fileprivate func configureNotifications() {
         NotificationCenter.default.addObserver(
-            self, selector: #selector(self.appWillEnterForegroundNotification(_:)),
-            name: UIApplication.willEnterForegroundNotification, object: nil)
+            self, selector: #selector(appWillEnterForegroundNotification(_:)),
+            name: UIApplication.willEnterForegroundNotification, object: nil
+        )
     }
-    
+
     /// Notifies the camera controller that the app is about to background. The app must stop processing until re-foregrounded.
     /// - Parameter notification: the NSNotification.
-    @objc private func appWillEnterForegroundNotification(_ notification: Notification) {
+    @objc private func appWillEnterForegroundNotification(_: Notification) {
         // SDK pauses/disables lens in background, so re-apply the lens when entering foreground
         guard let currentLens = currentLens else { return }
-        
+
         applyLens(currentLens, launchData: currentLaunchData)
     }
-    
 }
 
 // MARK: Key-Value Observing
+
 extension CustomCameraController {
-    
     /// Restores continuous autoexposure after the camera finishes a user-initiated tap to focus
     private func restoreContinuousAutoExposure(_ device: AVCaptureDevice, _ change: NSKeyValueObservedChange<Bool>) {
         guard let isAdjustingExposure = change.newValue,
@@ -662,7 +674,7 @@ extension CustomCameraController {
         else {
             return
         }
-        
+
         do {
             try device.lockForConfiguration()
             if device.isExposureModeSupported(.continuousAutoExposure) {
@@ -674,7 +686,7 @@ extension CustomCameraController {
             return
         }
     }
-    
+
     /// Restores continuous autofocus after the camera finishes a user-initiated tap to focus
     private func restoreContinuousAutoFocus(_ device: AVCaptureDevice, _ change: NSKeyValueObservedChange<Bool>) {
         guard let isAdjustingFocus = change.newValue,
@@ -682,7 +694,7 @@ extension CustomCameraController {
         else {
             return
         }
-        
+
         do {
             try device.lockForConfiguration()
             if device.isFocusModeSupported(.continuousAutoFocus) {
@@ -694,12 +706,11 @@ extension CustomCameraController {
             return
         }
     }
-    
 }
 
 // MARK: Lens facing preference
+
 extension CustomCameraController {
-    
     /// Set camera position based on lens facing preference.
     private func changeCameraPosition(with lensFacing: LensFacingPreference) {
         var position: AVCaptureDevice.Position?

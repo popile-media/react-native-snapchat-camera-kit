@@ -10,45 +10,45 @@ import SCSDKCameraKit
 extension CameraKitView {
     func applyLensById(lensId: NSString, lensGroups: NSArray, launchDataMap: NSDictionary?, promise: Promise?) {
         var lens: Lens?
-        
+
         lensGroups.forEach { groupID in
             lens = self.cameraController?.cameraKit.lenses.repository.lens(id: lensId as String, groupID: groupID as! String)
         }
-        
-        if (lens != nil) {
+
+        if lens != nil {
             var launcData: LensLaunchData?
-            
-            if (launchDataMap != nil) {
+
+            if launchDataMap != nil {
                 launcData = CustomLensLaunchData.fromBridge(data: launchDataMap!)
             }
-            
-            self.cameraController?.applyLens(lens!, launchData: launcData) { status in
+
+            cameraController?.applyLens(lens!, launchData: launcData) { status in
                 promise?.resolve(status)
             }
         } else {
-            // todo: lens not found
+            // TODO: lens not found
         }
     }
-    
+
     func getLensesByGroupId(lensGroups: NSArray, callback jsCallbackFunc: @escaping RCTResponseSenderBlock) {
         let lenses: NSMutableArray = []
-        let err: NSNull = NSNull()
-        
+        let err = NSNull()
+
         lensGroups.forEach { groupId in
             self.cameraController?.cameraKit.lenses.repository.lenses(groupID: groupId as! String).forEach { lens in
                 let lensObject = LensModel(lens: lens).toBridge()
-                
+
                 lenses.add(lensObject)
             }
         }
-        
+
         jsCallbackFunc([lenses as? [Any]? as Any, err])
     }
-    
+
     func clearLenses(callback jsCallbackFunc: @escaping RCTResponseSenderBlock) {
-        let err: NSNull = NSNull()
-        
-        self.cameraController?.clearLens() { status in
+        let err = NSNull()
+
+        cameraController?.clearLens { status in
             jsCallbackFunc([status, err])
         }
     }

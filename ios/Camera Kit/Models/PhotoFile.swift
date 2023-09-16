@@ -6,15 +6,15 @@
 //
 
 public final class PhotoFileModel {
-  private var path: String
-  
-  init(path: String) {
-    self.path = path
-  }
-  
-  func toBridge() -> [String: Any] {
-    return [
-      "path": self.path,
-    ]
-  }
+    private var path: String
+
+    init(path: String) {
+        self.path = path
+    }
+
+    func toBridge() -> [String: Any] {
+        return [
+            "path": path,
+        ]
+    }
 }
