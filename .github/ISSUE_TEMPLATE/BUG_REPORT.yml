@@ -1,6 +1,6 @@
 name: 🐛 Bug Report
 description: File a bug report
-title: "🐛 "
+title: '🐛 '
 labels: [🐛 bug]
 body:
   - type: textarea
@@ -14,7 +14,7 @@ body:
     attributes:
       label: Reproduceable Code
       description: Share a small reproduceable code snippet here (or the entire file if necessary). This will be automatically formatted into code, so no need for backticks.
-      render: tsx
+      render: TSX
   - type: textarea
     attributes:
       label: What happened instead?
@@ -26,7 +26,7 @@ body:
     attributes:
       label: Relevant log output
       description: Please copy and paste any relevant log output (Xcode Logs/Android Studio Logcat). This will be automatically formatted into code, so no need for backticks.
-      render: shell
+      render: console
   - type: input
     attributes:
       label: Device
