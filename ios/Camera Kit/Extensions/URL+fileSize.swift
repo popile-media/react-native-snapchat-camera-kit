@@ -6,8 +6,8 @@
 //
 
 public extension URL {
-    var fileSize: Int? {
-        let value = try? resourceValues(forKeys: [.fileSizeKey])
-        return value?.fileSize
-    }
+  var fileSize: Int? {
+    let value = try? resourceValues(forKeys: [.fileSizeKey])
+    return value?.fileSize
+  }
 }

@@ -1,6 +1,6 @@
 //
 //  PermissionManagerModule.m
-//  DemoApp
+//  react-native-snapchat-camera-kit
 //
 //  Created by Rıdvan Altun on 20.03.2023.
 //

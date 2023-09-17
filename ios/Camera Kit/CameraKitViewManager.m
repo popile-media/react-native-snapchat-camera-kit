@@ -1,6 +1,6 @@
 //
 //  CameraKitViewManager.m
-//  DemoApp
+//  react-native-snapchat-camera-kit
 //
 //  Created by Rıdvan Altun on 25.03.2023.
 //

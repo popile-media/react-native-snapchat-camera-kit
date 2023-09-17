@@ -1,6 +1,6 @@
 //
 //  CameraFacing.swift
-//  DemoApp
+//  react-native-snapchat-camera-kit
 //
 //  Created by Rıdvan Altun on 27.03.2023.
 //
@@ -8,20 +8,20 @@
 import AVFoundation
 
 public final class CameraFacingModel {
-    private var facing: AVCaptureDevice.Position?
+  private var facing: AVCaptureDevice.Position?
 
-    init(facing: AVCaptureDevice.Position?) {
-        self.facing = facing
-    }
+  init(facing: AVCaptureDevice.Position?) {
+    self.facing = facing
+  }
 
-    func toString() -> String {
-        switch facing {
-        case .back:
-            return "back"
-        case .front:
-            return "front"
-        default:
-            return "unspecified"
-        }
+  func toString() -> String {
+    switch facing {
+    case .back:
+      return "back"
+    case .front:
+      return "front"
+    default:
+      return "unspecified"
     }
+  }
 }

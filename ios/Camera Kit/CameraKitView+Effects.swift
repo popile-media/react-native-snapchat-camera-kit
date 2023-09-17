@@ -1,6 +1,6 @@
 //
 //  CameraKitView+Effects.swift
-//  DemoApp
+//  react-native-snapchat-camera-kit
 //
 //  Created by Rıdvan Altun on 28.03.2023.
 //
@@ -8,48 +8,52 @@
 import SCSDKCameraKit
 
 extension CameraKitView {
-    func applyLensById(lensId: NSString, lensGroups: NSArray, launchDataMap: NSDictionary?, promise: Promise?) {
-        var lens: Lens?
+  func applyLensById(lensId: NSString, lensGroups: NSArray, launchDataMap: NSDictionary?, promise: Promise?) {
+    var lens: Lens?
 
-        lensGroups.forEach { groupID in
-            lens = self.cameraController?.cameraKit.lenses.repository.lens(id: lensId as String, groupID: groupID as! String)
-        }
-
-        if lens != nil {
-            var launcData: LensLaunchData?
-
-            if launchDataMap != nil {
-                launcData = CustomLensLaunchData.fromBridge(data: launchDataMap!)
-            }
-
-            cameraController?.applyLens(lens!, launchData: launcData) { status in
-                promise?.resolve(status)
-            }
-        } else {
-            // TODO: lens not found
-        }
+    lensGroups.forEach { groupID in
+      // swiftlint:disable force_cast
+      lens = self.cameraController?.cameraKit.lenses.repository.lens(id: lensId as String, groupID: groupID as! String)
+      // swiftlint:enable force_cast
     }
 
-    func getLensesByGroupId(lensGroups: NSArray, callback jsCallbackFunc: @escaping RCTResponseSenderBlock) {
-        let lenses: NSMutableArray = []
-        let err = NSNull()
+    if lens != nil {
+      var launcData: LensLaunchData?
 
-        lensGroups.forEach { groupId in
-            self.cameraController?.cameraKit.lenses.repository.lenses(groupID: groupId as! String).forEach { lens in
-                let lensObject = LensModel(lens: lens).toBridge()
+      if launchDataMap != nil {
+        launcData = CustomLensLaunchData.fromBridge(data: launchDataMap!)
+      }
 
-                lenses.add(lensObject)
-            }
-        }
+      cameraController?.applyLens(lens!, launchData: launcData) { status in
+        promise?.resolve(status)
+      }
+    } else {
+      // TODO: lens not found
+    }
+  }
 
-        jsCallbackFunc([lenses as? [Any]? as Any, err])
+  func getLensesByGroupId(lensGroups: NSArray, callback jsCallbackFunc: @escaping RCTResponseSenderBlock) {
+    let lenses: NSMutableArray = []
+    let err = NSNull()
+
+    lensGroups.forEach { groupId in
+      // swiftlint:disable force_cast
+      self.cameraController?.cameraKit.lenses.repository.lenses(groupID: groupId as! String).forEach { lens in
+        let lensObject = LensModel(lens: lens).toBridge()
+
+        lenses.add(lensObject)
+      }
+      // swiftlint:enable force_cast
     }
 
-    func clearLenses(callback jsCallbackFunc: @escaping RCTResponseSenderBlock) {
-        let err = NSNull()
+    jsCallbackFunc([lenses as? [Any]? as Any, err])
+  }
 
-        cameraController?.clearLens { status in
-            jsCallbackFunc([status, err])
-        }
+  func clearLenses(callback jsCallbackFunc: @escaping RCTResponseSenderBlock) {
+    let err = NSNull()
+
+    cameraController?.clearLens { status in
+      jsCallbackFunc([status, err])
     }
+  }
 }
