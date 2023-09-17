@@ -9,6 +9,7 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "start:reset-cache": "npm run clear:watchman && npm run start -- --reset-cache",
+    "lint": "eslint .",
     "clear:watchman": "watchman watch-del-all",
     "pod-install": "npx pod-install ios --quiet",
     "typecheck": "tsc --noEmit"
@@ -29,8 +30,11 @@
     "@babel/core": "^7.20.0",
     "@babel/preset-env": "^7.20.0",
     "@babel/runtime": "^7.20.0",
+    "@react-native/eslint-config": "^0.72.2",
     "@types/react-native-video": "^5.0.14",
     "babel-plugin-module-resolver": "^4.1.0",
+    "eslint": "^8.49.0",
+    "eslint-plugin-prettier": "^5.0.0",
     "metro-react-native-babel-preset": "0.73.9",
     "typescript": "^5.2.2"
   }
