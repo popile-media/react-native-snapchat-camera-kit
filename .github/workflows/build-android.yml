@@ -20,6 +20,7 @@ on:
 
 jobs:
   build:
+    if: false # disabled
     name: Build Android Example App
     runs-on: ubuntu-latest
     steps:

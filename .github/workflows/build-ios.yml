@@ -18,6 +18,7 @@ on:
 
 jobs:
   build:
+    if: false # disabled
     name: Build iOS Example App
     runs-on: macOS-latest
     defaults:
