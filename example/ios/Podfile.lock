@@ -647,7 +647,7 @@ SPEC CHECKSUMS:
   react-native-cameraroll: f3050460fe1708378698c16686bfaa5f34099be2
   react-native-config: 86038147314e2e6d10ea9972022aa171e6b1d4d8
   react-native-safe-area-context: f5549f36508b1b7497434baa0cd97d7e470920d4
-  react-native-snapchat-camera-kit: 4991b149785f3465f6178893a8287183bb0e2934
+  react-native-snapchat-camera-kit: 31d874c8635f1e9e1a453eacc1baea4a4fdb3091
   react-native-video: c26780b224543c62d5e1b2a7244a5cd1b50e8253
   React-perflogger: 43392072a5b867a504e2b4857606f8fc5a403d7f
   React-RCTActionSheet: c7b67c125bebeda9fb19fc7b200d85cb9d6899c4
