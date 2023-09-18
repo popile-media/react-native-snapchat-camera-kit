@@ -13,7 +13,7 @@ const config = {
   url: 'https://popile-media.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/react-native-snapchat-camera-kit',
+  baseUrl: '/react-native-snapchat-camera-kit/',
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'popile-media', // Usually your GitHub org/user name.
