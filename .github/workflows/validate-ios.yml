@@ -1,12 +1,13 @@
 name: Validate iOS
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - '.github/workflows/validate-ios.yml'
-      - 'ios/**'
+  workflow_call:
+  # push:
+  #   branches:
+  #     - main
+  #   paths:
+  #     - '.github/workflows/validate-ios.yml'
+  #     - 'ios/**'
   pull_request:
     paths:
       - '.github/workflows/validate-ios.yml'
@@ -16,7 +17,11 @@ jobs:
   SwiftLint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout git repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
       - name: Run SwiftLint GitHub Action (--strict)
         uses: norio-nomura/action-swiftlint@master
         # with:
@@ -24,12 +29,15 @@ jobs:
         env:
           WORKING_DIRECTORY: ios
   SwiftFormat:
-    runs-on: macOS-latest
+    runs-on: macos-latest
     defaults:
       run:
         working-directory: ./ios
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout git repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Install SwiftFormat
         run: brew install swiftformat

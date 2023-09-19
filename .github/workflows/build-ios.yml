@@ -1,14 +1,15 @@
 name: Build iOS
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - '.github/workflows/build-ios.yml'
-      - 'ios/**'
-      - '*.podspec'
-      - 'example/ios/**'
+  workflow_call:
+  # push:
+  #   branches:
+  #     - main
+  #   paths:
+  #     - '.github/workflows/build-ios.yml'
+  #     - 'ios/**'
+  #     - '*.podspec'
+  #     - 'example/ios/**'
   pull_request:
     paths:
       - '.github/workflows/build-ios.yml'
@@ -20,16 +21,20 @@ jobs:
   build:
     if: false # disabled
     name: Build iOS Example App
-    runs-on: macOS-latest
+    runs-on: macos-latest
     defaults:
       run:
         working-directory: example/ios
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout git repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
+
       - name: Restore node_modules from cache
         uses: actions/cache@v2
         id: yarn-cache
@@ -38,6 +43,7 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
+
       - name: Install node_modules for example/
         run: yarn install --frozen-lockfile --cwd ..
 
@@ -61,10 +67,13 @@ jobs:
           key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
           restore-keys: |
             ${{ runner.os }}-pods-
+
       - name: Install Pods
         run: pod install
+
       - name: Install xcpretty
         run: gem install xcpretty
+
       - name: Build App
         run: "set -o pipefail && xcodebuild \
           CC=clang CPLUSPLUS=clang++ LD=clang LDPLUSPLUS=clang++ \

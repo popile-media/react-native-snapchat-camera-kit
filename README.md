@@ -2,11 +2,15 @@
 
 > 👻 A simple and easy-to-use interface for Snapchat Camera-Kit
 
+[![npm version](https://img.shields.io/npm/v/react-native-snapchat-camera-kit.svg)](https://npmjs.com/package/react-native-snapchat-camera-kit)
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+[![license](https://img.shields.io/npm/l/react-native-snapchat-camera-kit.svg)](https://github.com/popile-media/react-native-snapchat-camera-kit/blob/master/LICENSE)
+
 ### Compatibility
 
-|  CameraKit SDK   |   Lib Version   | React Native Version | Lens Studio Version (Max) |
-| ---------------- | --------------- | -------------------- | ------------------------- |
-| 1.21.1           | `>= 0.1.0`      | `>= 0.64.2`          | 4.43.x                    |
+| CameraKit SDK | Lib Version | React Native Version | Lens Studio Version (Max) |
+| ------------- | ----------- | -------------------- | ------------------------- |
+| 1.21.1        | `>= 0.1.0`  | `>= 0.64.2`          | 4.43.x                    |
 
 ### Documentation
 

@@ -1,20 +1,21 @@
 name: Validate JS
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - '.github/workflows/validate-js.yml'
-      - 'src/**'
-      - '*.json'
-      - '*.js'
-      - '*.lock'
-      - 'example/src/**'
-      - 'example/*.json'
-      - 'example/*.js'
-      - 'example/*.lock'
-      - 'example/*.tsx'
+  workflow_call:
+  # push:
+  #   branches:
+  #     - main
+  #   paths:
+  #     - '.github/workflows/validate-js.yml'
+  #     - 'src/**'
+  #     - '*.json'
+  #     - '*.js'
+  #     - '*.lock'
+  #     - 'example/src/**'
+  #     - 'example/*.json'
+  #     - 'example/*.js'
+  #     - 'example/*.lock'
+  #     - 'example/*.tsx'
   pull_request:
     paths:
       - '.github/workflows/validate-js.yml'
@@ -33,11 +34,15 @@ jobs:
     name: Compile JS (tsc)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout git repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
+
       - name: Restore node_modules from cache
         uses: actions/cache@v2
         id: yarn-cache
@@ -49,6 +54,7 @@ jobs:
 
       - name: Install node_modules
         run: yarn install --frozen-lockfile
+
       - name: Install node_modules (example/)
         run: yarn install --frozen-lockfile --cwd example
 
@@ -64,11 +70,15 @@ jobs:
     name: Lint JS (eslint, prettier)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout git repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
+
       - name: Restore node_modules from cache
         uses: actions/cache@v2
         id: yarn-cache
@@ -80,6 +90,7 @@ jobs:
 
       - name: Install node_modules
         run: yarn install --frozen-lockfile
+
       - name: Install node_modules (example/)
         run: yarn install --frozen-lockfile --cwd example
 
