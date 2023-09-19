@@ -103,7 +103,7 @@ final class CameraKitViewManager: RCTViewManager {
   }
 
   @objc
-  final func changeLensById(_node _: NSNumber, lensId: NSString, lensGroups: NSArray, launchDataMap: NSDictionary?, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
+  final func changeLensById(_ node: NSNumber, lensId: NSString, lensGroups: NSArray, launchDataMap: NSDictionary?, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
     let promise = Promise(resolver: resolve, rejecter: reject)
     let component = getCameraKitView(withTag: node)
 
