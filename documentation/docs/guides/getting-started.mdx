@@ -54,6 +54,45 @@ npx pod-install
 </TabItem>
 </Tabs>
 
+## Other Required Steps
+
+### Android
+
+1. Open your project's `AndroidManifest.xml` and add the following lines:
+
+```xml
+<uses-permission android:name="android.permission.CAMERA" />
+
+<!-- optionally, if you want to record audio: -->
+<uses-permission android:name="android.permission.RECORD_AUDIO" />
+```
+
+2. Edit `android/app/build.gradle` file like below:
+
+```groovy
+android {
+  //...
+
+  packagingOptions {
+    pickFirst '**/libcrypto.so'
+    pickFirst '**/libssl.so'
+  }
+}
+```
+
+### iOS
+
+1. Open your project's `Info.plist` and add the following lines:
+
+```xml
+<key>NSCameraUsageDescription</key>
+<string>$(PRODUCT_NAME) needs access to your Camera.</string>
+
+<!-- optionally, if you want to record audio: -->
+<key>NSMicrophoneUsageDescription</key>
+<string>$(PRODUCT_NAME) needs access to your Microphone.</string>
+```
+
 ## Defining Credentials
 
 There are two ways to set credentials: during build time or at runtime.
@@ -99,32 +138,6 @@ init({
 });
 ```
 
-## Other Required Steps
-
-### Android
-
-1. Open your project's `AndroidManifest.xml` and add the following lines:
-
-```xml
-<uses-permission android:name="android.permission.CAMERA" />
-
-<!-- optionally, if you want to record audio: -->
-<uses-permission android:name="android.permission.RECORD_AUDIO" />
-```
-
-### iOS
-
-1. Open your project's `Info.plist` and add the following lines:
-
-```xml
-<key>NSCameraUsageDescription</key>
-<string>$(PRODUCT_NAME) needs access to your Camera.</string>
-
-<!-- optionally, if you want to record audio: -->
-<key>NSMicrophoneUsageDescription</key>
-<string>$(PRODUCT_NAME) needs access to your Microphone.</string>
-```
-
 ## Prepare Lenses
 
-You have to define you lens group id/s before use lenses. Checkout [Defining Lens Group Id](https://popile-media.github.io/react-native-snapchat-camera-kit/docs/guides/manage-lenses#defining-lens-group-id) section.
+You have to define you lens group id/s before use lenses. Checkout [Defining Lens Group Id](/react-native-snapchat-camera-kit/docs/guides/manage-lenses#defining-lens-group-id) section.
