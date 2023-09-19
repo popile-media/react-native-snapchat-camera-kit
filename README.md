@@ -14,7 +14,7 @@
 
 ### Documentation
 
-- [Guides](https://popile-media.github.io/react-native-snapchat-camera-kit/docs/guides)
+- [Guides](https://popile-media.github.io/react-native-snapchat-camera-kit/docs/guides/getting-started)
 - [API](https://popile-media.github.io/react-native-snapchat-camera-kit/docs/api)
 - [Example App](https://popile-media.github.io/react-native-snapchat-camera-kit/docs/example-app)
 
@@ -24,8 +24,8 @@ See the [contributing guide](https://popile-media.github.io/react-native-snapcha
 
 **This project exists thanks to all the people who contribute.**
 
-<a href = "https://github.com/popile-media/react-native-snapchat-camera-kit/graphs/contributors">
-  <img src = "https://contrib.rocks/image?repo=popile-media/react-native-snapchat-camera-kit"/>
+<a href="https://github.com/popile-media/react-native-snapchat-camera-kit/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=popile-media/react-native-snapchat-camera-kit" />
 </a>
 
 ### License

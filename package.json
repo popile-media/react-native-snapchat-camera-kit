@@ -57,7 +57,7 @@
   ],
   "repository": "https://github.com/popile-media/react-native-snapchat-camera-kit",
   "author": "Rıdvan Altun <ridvanaltun@outlook.com> (https://github.com/ridvanaltun)",
-  "license": "GPLv3",
+  "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/popile-media/react-native-snapchat-camera-kit/issues"
   },
