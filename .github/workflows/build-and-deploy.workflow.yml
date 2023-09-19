@@ -60,5 +60,5 @@ jobs:
 
       - name: Publish package
         run: |
-          git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.gi
+          git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
           yarn run release -- --ci --no-git.requireCleanWorkingDir
