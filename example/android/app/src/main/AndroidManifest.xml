@@ -20,9 +20,6 @@
     android:allowBackup="false"
     android:theme="@style/AppTheme">
     <!-- <meta-data
-      android:name="com.snap.camerakit.app.id"
-      android:value="@string/camera_kit_application_id" />
-    <meta-data
       android:name="com.snap.camerakit.api.token"
       android:value="@string/camera_kit_api_token" /> -->
     <activity

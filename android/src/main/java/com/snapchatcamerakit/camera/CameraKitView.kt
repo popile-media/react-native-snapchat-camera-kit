@@ -44,7 +44,6 @@ private val DEFAULT_OPTIONAL_PERMISSIONS =
 class CameraKitView(
   context: Context,
   private var apiKey: String?,
-  private var applicationId: String?,
 ) : FrameLayout(context) {
   companion object {
     val TAG = CameraKitView::class.simpleName
@@ -257,7 +256,6 @@ class CameraKitView(
     return Session
       .newBuilder(this.context)
       .apiToken(this.apiKey)
-      .applicationId(this.applicationId)
       .imageProcessorSource(this.imageProcessorSource)
       .audioProcessorSource(this.audioProcessorSource)
       .handleErrorsWith(

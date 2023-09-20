@@ -49,9 +49,7 @@
 		</array>
 		<key>UIViewControllerBasedStatusBarAppearance</key>
 		<false />
-		<!-- <key>SCCameraKitClientID</key>
-		<string>SNAPCHAT-CAMERA-KIT-APPLICATION-ID</string>
-		<key>SCCameraKitAPIToken</key>
+		<!-- <key>SCCameraKitAPIToken</key>
 		<string>SNAPCHAT-CAMERA-KIT-API-KEY</string> -->
 		<key>NSLocationWhenInUseUsageDescription</key>
 		<string>The app uses your location for location-aware lenses.</string>

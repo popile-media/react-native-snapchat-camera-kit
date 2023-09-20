@@ -341,9 +341,9 @@ PODS:
     - RCTTypeSafety
     - React-Core
     - ReactCommon/turbomodule/core
-  - react-native-snapchat-camera-kit (0.1.0):
+  - react-native-snapchat-camera-kit (0.1.2):
     - React-Core
-    - SCSDKCameraKit (= 1.21.1)
+    - SCSDKCameraKit (= 1.26.0)
   - react-native-video (5.2.1):
     - React-Core
     - react-native-video/Video (= 5.2.1)
@@ -436,8 +436,8 @@ PODS:
   - RNScreens (3.20.0):
     - React-Core
     - React-RCTImage
-  - SCSDKCameraKit (1.21.1)
-  - SocketRocket (0.6.0)
+  - SCSDKCameraKit (1.26.0)
+  - SocketRocket (0.6.1)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -647,7 +647,7 @@ SPEC CHECKSUMS:
   react-native-cameraroll: f3050460fe1708378698c16686bfaa5f34099be2
   react-native-config: 86038147314e2e6d10ea9972022aa171e6b1d4d8
   react-native-safe-area-context: f5549f36508b1b7497434baa0cd97d7e470920d4
-  react-native-snapchat-camera-kit: 31d874c8635f1e9e1a453eacc1baea4a4fdb3091
+  react-native-snapchat-camera-kit: cbea644e6b3060143554fcdb361fb95d190432f9
   react-native-video: c26780b224543c62d5e1b2a7244a5cd1b50e8253
   React-perflogger: 43392072a5b867a504e2b4857606f8fc5a403d7f
   React-RCTActionSheet: c7b67c125bebeda9fb19fc7b200d85cb9d6899c4
@@ -663,8 +663,8 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: 8692ac548bec648fa121980ccb4304afd136d584
   ReactCommon: 0c43eaeaaee231d7d8dc24fc5a6e4cf2b75bf196
   RNScreens: 218801c16a2782546d30bd2026bb625c0302d70f
-  SCSDKCameraKit: f127d227604b947555779cd0557be9157ba47f5d
-  SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
+  SCSDKCameraKit: a5b201bfd0afe5bafb1064fc518a8b6367687928
+  SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   Yoga: ba09b6b11e6139e3df8229238aa794205ca6a02a
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 

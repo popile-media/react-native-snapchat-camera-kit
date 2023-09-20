@@ -68,7 +68,6 @@ const CameraScreen = ({ navigation, route }: CameraScreenProps) => {
   useEffect(() => {
     init({
       apiKey: Config.CAMERA_KIT.API_KEY,
-      applicationId: Config.CAMERA_KIT.APP_ID,
     });
 
     setInitialized(true);

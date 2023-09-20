@@ -36,13 +36,12 @@ class CameraKitViewManager(reactContext: ReactApplicationContext) : ViewGroupMan
 
   override fun createViewInstance(context: ThemedReactContext): CameraKitView {
     val apiKey = SharedDataProvider.getSharedValue("apiKey")
-    val applicationId = SharedDataProvider.getSharedValue("applicationId")
 
-    if (apiKey != null && applicationId != null) {
-      return CameraKitView(context, apiKey, applicationId)
+    if (apiKey != null) {
+      return CameraKitView(context, apiKey)
     }
 
-    return CameraKitView(context, null, null)
+    return CameraKitView(context, null)
   }
 
   @ReactProp(name = "isActive", defaultBoolean = true)

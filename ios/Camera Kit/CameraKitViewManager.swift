@@ -11,10 +11,9 @@ import SCSDKCameraKit
 @objc(CameraKitViewManager)
 final class CameraKitViewManager: RCTViewManager {
   var apiKey: String?
-  var applicationId: String?
 
   override final func view() -> UIView! {
-    return CameraKitView(apiKey: apiKey, applicationId: applicationId)
+    return CameraKitView(apiKey: apiKey)
   }
 
   // Camera View Functions - (Recording)
@@ -146,7 +145,6 @@ final class CameraKitViewManager: RCTViewManager {
   @objc
   final func initMethod(_ options: NSDictionary) {
     apiKey = options.value(forKey: "apiKey") as? String
-    applicationId = options.value(forKey: "applicationId") as? String
   }
 
   @objc

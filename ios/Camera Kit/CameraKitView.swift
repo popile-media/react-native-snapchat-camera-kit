@@ -74,7 +74,6 @@ public final class CameraKitView: UIView, CustomCameraControllerUIDelegate {
   public var isPropsInitalized = false
 
   public var apiKey: String?
-  public var applicationId: String?
 
   public var pinchGestureRecognizer: UIPinchGestureRecognizer?
   public var singleTap: UITapGestureRecognizer?
@@ -92,17 +91,15 @@ public final class CameraKitView: UIView, CustomCameraControllerUIDelegate {
     return view
   }()
 
-  required init(apiKey: String?, applicationId: String?) {
+  required init(apiKey: String?) {
     self.apiKey = apiKey
-    self.applicationId = applicationId
 
     super.init(frame: CGRect.zero)
 
     var sessionConfig: SessionConfig?
 
-    if apiKey != nil && applicationId != nil {
+    if apiKey != nil {
       sessionConfig = SessionConfig(
-        applicationID: applicationId! as String,
         apiToken: apiKey! as String
       )
     }

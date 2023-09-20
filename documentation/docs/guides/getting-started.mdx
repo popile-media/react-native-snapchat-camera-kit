@@ -107,9 +107,6 @@ Add secrets to `AndroidManifest.xml` file like below:
 
 ```xml
 <meta-data
-    android:name="com.snap.camerakit.app.id"
-    android:value="SNAPCHAT-CAMERA-KIT-APPLICATION-ID" />
-<meta-data
     android:name="com.snap.camerakit.api.token"
     android:value="SNAPCHAT-CAMERA-KIT-API-KEY" />
 ```
@@ -119,8 +116,6 @@ Add secrets to `AndroidManifest.xml` file like below:
 Add secrets to `Info.plist` file like below:
 
 ```xml
-<key>SCCameraKitClientID</key>
-<string>SNAPCHAT-CAMERA-KIT-APPLICATION-ID</string>
 <key>SCCameraKitAPIToken</key>
 <string>SNAPCHAT-CAMERA-KIT-API-KEY</string>
 ```
@@ -134,7 +129,6 @@ import { init } from 'react-native-snapchat-camera-kit';
 
 init({
   apiKey: 'SNAPCHAT-CAMERA-KIT-API-KEY',
-  applicationId: 'SNAPCHAT-CAMERA-KIT-APPLICATION-ID',
 });
 ```
 

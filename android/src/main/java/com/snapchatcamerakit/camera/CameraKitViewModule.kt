@@ -350,10 +350,8 @@ class CameraKitViewModule(reactContext: ReactApplicationContext) : ReactContextB
     coroutineScope.launch {
       runOnUiThread {
         val apiKey = options.getString("apiKey")
-        val applicationId = options.getString("applicationId")
 
         SharedDataProvider.putSharedValue("apiKey", apiKey)
-        SharedDataProvider.putSharedValue("applicationId", applicationId)
       }
     }
   }

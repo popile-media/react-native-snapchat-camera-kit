@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
 
   s.source_files = "ios/**/*.{h,m,mm,swift}"
 
-  camera_kit_version = "1.21.1"
+  camera_kit_version = "1.26.0"
 
   s.dependency "SCSDKCameraKit", camera_kit_version
   # s.dependency "SCSDKCameraKitReferenceUI", camera_kit_version
