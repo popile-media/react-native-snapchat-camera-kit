@@ -113,7 +113,7 @@ const config = {
             },
             {
               label: 'Bug Report',
-              href: 'https://github.com/popile-media/react-native-snapchat-camera-kit/issues/new',
+              href: 'https://github.com/popile-media/react-native-snapchat-camera-kit/issues/new/choose',
             },
           ],
         },
