@@ -119,21 +119,25 @@ const config = {
           title: 'More',
           items: [
             {
-              label: 'Offical Site',
-              href: 'https://ar.snap.com/camera-kit',
+              label: 'Discussions',
+              href: 'https://github.com/popile-media/react-native-snapchat-camera-kit/discussions',
             },
-            {
-              label: 'Offical Documentation',
-              href: 'https://docs.snap.com/camera-kit/home',
-            },
-            {
-              label: 'Request Access',
-              href: 'https://camera-kit.snapchat.com/request',
-            },
-            {
-              label: 'Forum',
-              href: 'https://community.snap.com/snapar/categories/camera-kit',
-            },
+            // {
+            //   label: 'Offical Site',
+            //   href: 'https://ar.snap.com/camera-kit',
+            // },
+            // {
+            //   label: 'Offical Documentation',
+            //   href: 'https://docs.snap.com/camera-kit/home',
+            // },
+            // {
+            //   label: 'Request Access',
+            //   href: 'https://camera-kit.snapchat.com/request',
+            // },
+            // {
+            //   label: 'Forum',
+            //   href: 'https://community.snap.com/snapar/categories/camera-kit',
+            // },
           ],
         },
       ],

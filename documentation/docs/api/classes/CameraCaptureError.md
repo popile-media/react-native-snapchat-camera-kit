@@ -30,7 +30,7 @@ CameraError.cause
 
 #### Defined in
 
-[CameraKitModule/CameraError.ts:130](https://github.com/popile-media/react-native-snapchat-camera-kit/blob/51f1638/src/CameraKitModule/CameraError.ts#L130)
+[CameraKitModule/CameraError.ts:130](https://github.com/popile-media/react-native-snapchat-camera-kit/blob/970158e/src/CameraKitModule/CameraError.ts#L130)
 
 ___
 
@@ -48,7 +48,7 @@ CameraError.code
 
 #### Defined in
 
-[CameraKitModule/CameraError.ts:124](https://github.com/popile-media/react-native-snapchat-camera-kit/blob/51f1638/src/CameraKitModule/CameraError.ts#L124)
+[CameraKitModule/CameraError.ts:124](https://github.com/popile-media/react-native-snapchat-camera-kit/blob/970158e/src/CameraKitModule/CameraError.ts#L124)
 
 ___
 
@@ -66,7 +66,7 @@ CameraError.message
 
 #### Defined in
 
-[CameraKitModule/CameraError.ts:127](https://github.com/popile-media/react-native-snapchat-camera-kit/blob/51f1638/src/CameraKitModule/CameraError.ts#L127)
+[CameraKitModule/CameraError.ts:127](https://github.com/popile-media/react-native-snapchat-camera-kit/blob/970158e/src/CameraKitModule/CameraError.ts#L127)
 
 ## Methods
 
@@ -84,4 +84,4 @@ CameraError.toString
 
 #### Defined in
 
-[CameraKitModule/CameraError.ts:152](https://github.com/popile-media/react-native-snapchat-camera-kit/blob/51f1638/src/CameraKitModule/CameraError.ts#L152)
+[CameraKitModule/CameraError.ts:152](https://github.com/popile-media/react-native-snapchat-camera-kit/blob/970158e/src/CameraKitModule/CameraError.ts#L152)

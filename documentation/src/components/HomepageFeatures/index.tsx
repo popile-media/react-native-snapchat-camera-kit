@@ -24,19 +24,16 @@ const FeatureList: FeatureItem[] = [
     Svg: require('@site/static/img/lens-studio.svg').default,
     description: (
       <>
-        Easily integrate the AR into your React Native App and avoid dealing with
-        native development.
+        Easily integrate the AR into your React Native App and avoid dealing
+        with native development.
       </>
     ),
   },
   {
-    title: 'Powered by Snapchat',
-    Svg: require('@site/static/img/snapchat-logo.svg').default,
+    title: 'AR Integration Made Effortless',
+    Svg: require('@site/static/img/logo.svg').default,
     description: (
-      <>
-        The library was not written by the Snapchat Team, but we are using
-        Snapchat's CameraKit SDK in the background.
-      </>
+      <>Concentrate on your project's core objectives without distractions.</>
     ),
   },
 ];

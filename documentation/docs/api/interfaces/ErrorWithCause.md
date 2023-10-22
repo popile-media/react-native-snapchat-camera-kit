@@ -21,7 +21,7 @@ Optional additional cause for nested errors
 
 #### Defined in
 
-[CameraKitModule/CameraError.ts:101](https://github.com/popile-media/react-native-snapchat-camera-kit/blob/51f1638/src/CameraKitModule/CameraError.ts#L101)
+[CameraKitModule/CameraError.ts:101](https://github.com/popile-media/react-native-snapchat-camera-kit/blob/970158e/src/CameraKitModule/CameraError.ts#L101)
 
 ___
 
@@ -36,7 +36,7 @@ The native error's code.
 
 #### Defined in
 
-[CameraKitModule/CameraError.ts:66](https://github.com/popile-media/react-native-snapchat-camera-kit/blob/51f1638/src/CameraKitModule/CameraError.ts#L66)
+[CameraKitModule/CameraError.ts:66](https://github.com/popile-media/react-native-snapchat-camera-kit/blob/970158e/src/CameraKitModule/CameraError.ts#L66)
 
 ___
 
@@ -51,7 +51,7 @@ Optional additional details
 
 #### Defined in
 
-[CameraKitModule/CameraError.ts:87](https://github.com/popile-media/react-native-snapchat-camera-kit/blob/51f1638/src/CameraKitModule/CameraError.ts#L87)
+[CameraKitModule/CameraError.ts:87](https://github.com/popile-media/react-native-snapchat-camera-kit/blob/970158e/src/CameraKitModule/CameraError.ts#L87)
 
 ___
 
@@ -66,7 +66,7 @@ The native error's domain.
 
 #### Defined in
 
-[CameraKitModule/CameraError.ts:73](https://github.com/popile-media/react-native-snapchat-camera-kit/blob/51f1638/src/CameraKitModule/CameraError.ts#L73)
+[CameraKitModule/CameraError.ts:73](https://github.com/popile-media/react-native-snapchat-camera-kit/blob/970158e/src/CameraKitModule/CameraError.ts#L73)
 
 ___
 
@@ -81,7 +81,7 @@ The native error description
 
 #### Defined in
 
-[CameraKitModule/CameraError.ts:80](https://github.com/popile-media/react-native-snapchat-camera-kit/blob/51f1638/src/CameraKitModule/CameraError.ts#L80)
+[CameraKitModule/CameraError.ts:80](https://github.com/popile-media/react-native-snapchat-camera-kit/blob/970158e/src/CameraKitModule/CameraError.ts#L80)
 
 ___
 
@@ -96,4 +96,4 @@ Optional Java stacktrace
 
 #### Defined in
 
-[CameraKitModule/CameraError.ts:94](https://github.com/popile-media/react-native-snapchat-camera-kit/blob/51f1638/src/CameraKitModule/CameraError.ts#L94)
+[CameraKitModule/CameraError.ts:94](https://github.com/popile-media/react-native-snapchat-camera-kit/blob/970158e/src/CameraKitModule/CameraError.ts#L94)
